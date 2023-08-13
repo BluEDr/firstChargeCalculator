@@ -29,6 +29,6 @@ class calculatingController extends Controller
             $postSelects = Post::all();
             return view('insertValue', ['l'=> $request->method(), 't'=>5122, 'db' => $postSelects]);
         }
-        return view('insertValue', ['l'=> $request->method(), 't'=>5122, 'db' => null]);
+        return view('insertValue', ['l' => $request->method(), 't'=>5122, 'db' => null]);
     }
 }
