@@ -23,6 +23,7 @@
             <p>Insert the coast amount.</p> <br>
             <input type="text" name="value" id="value"> <br>
             <input type="submit" value="Submit">
+            <a href="{{route('insert')}}">insertValue</a>
         </form>       
     </div>
 </body>

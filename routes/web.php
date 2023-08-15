@@ -34,4 +34,4 @@ Route::get('/dokimi/{id}',  [calculatingController::class, 'index']);
 
 Route::get('/pyli/{ttr}', [calculatingController::class, 'pyliTtr']);
 
-Route::any('/insert', [calculatingController::class, 'insertValue']);
+Route::any('/insert', [calculatingController::class, 'insertValue'])->name('insert');
