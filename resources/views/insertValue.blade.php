@@ -12,7 +12,9 @@
     <p>{{$db}}</p>
     @if ($db != null)
         @foreach ($db as $d)
-            <p>{{ $d->content }}</p>
+            <p>{{ $d->content }}
+            <a href="{{route('post.del',$d)}}"><button>Delete</button></a> 
+            </p>
         @endforeach
     @else
         <p>Value = Null!</p>

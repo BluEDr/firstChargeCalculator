@@ -26,9 +26,14 @@ class calculatingController extends Controller
             $post->title = $request->get('value');
             $post->content = $request->get('value');
             $post->save();
-            $postSelects = Post::all();
+            $postSelects = Post::where('content', 'like', '%' . '88' . '%')->get();
             return view('insertValue', ['l'=> $request->method(), 't'=>5122, 'db' => $postSelects]);
         }
         return view('insertValue', ['l' => $request->method(), 't'=>5122, 'db' => null]);
+    }
+    public function postDelete(Post $post){
+        echo "$post";
+        $post->delete();
+        return redirect('insert');
     }
 }
