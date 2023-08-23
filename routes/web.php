@@ -41,3 +41,5 @@ Route::any('/delete-post/{post}', [calculatingController::class, 'postDelete'])-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
