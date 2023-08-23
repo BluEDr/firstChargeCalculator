@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\listing;
 use App\Http\Controllers\calculatingController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,7 @@ Route::get('/pyli/{ttr}', [calculatingController::class, 'pyliTtr']);
 
 Route::any('/insert', [calculatingController::class, 'insertValue'])->name('insert');
 Route::any('/delete-post/{post}', [calculatingController::class, 'postDelete'])->name('post.del');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
