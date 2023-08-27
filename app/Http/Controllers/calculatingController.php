@@ -25,6 +25,7 @@ class calculatingController extends Controller
             $post = new Post();
             $post->title = $request->get('value');
             $post->content = $request->get('value');
+            $post->user_id = 0; 
             $post->save();
             $postSelects = Post::where('content', 'like', '%' . '88' . '%')->get();
             return view('insertValue', ['l'=> $request->method(), 't'=>5122, 'db' => $postSelects]);
