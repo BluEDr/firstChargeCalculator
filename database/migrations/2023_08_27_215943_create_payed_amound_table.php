@@ -17,9 +17,11 @@ return new class extends Migration
 
             //den exo kanei akoma migrate to sugkekrimeno
             $table->id();
-            $table->real('price'); //edo den ksero an prepei na balo real, Double, or something else
-            $table->integer('user_id');
-            $table->integer('user_id');
+            $table->float('price',8,2); //edo den ksero an prepei na balo real, Double, or something else
+            $table->string('reason');
+            $table->integer('category_id'); //foreign key to category tabe
+            $table->integer('user_id');     //foreign key to user table
+            $table->integer('currency_id'); //foreign key to currency table
             $table->timestamps();
                                     //add and more columns in the structure
         });
