@@ -16,7 +16,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [calculatingController::class, 'index'])->name('index');
+Route::any('/', [calculatingController::class, 'index'])->name('index');
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';

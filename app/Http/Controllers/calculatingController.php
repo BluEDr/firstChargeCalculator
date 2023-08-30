@@ -8,7 +8,13 @@ use App\Models\Post;
 class calculatingController extends Controller
 {
     public function index(Request $request) {
-        return view('index');
+        $a1 = 1;
+        $a2 = 2;
+        if($request->method()=='POST') {
+            $a1 = $request->get('price');
+            $a2 = $request->get('reason');
+        }
+        return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2]);
     }
 
     public function pyli() {

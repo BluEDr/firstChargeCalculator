@@ -1,8 +1,20 @@
 @extends('layouts.app2')
 @section('content')
-    
-
-    <h2>Hellooooooooooooooooooooooooo</h2>
+    {{$l}}
+<p>{{$a}}</p>
+<p>{{$b}}</p>
+<form method="POST">
+    @csrf
+    <div class="form-group">
+      <label for="price">Insert the price</label>
+      <input type="text" class="form-control" name="price" id="price" placeholder="Default input">
+    </div>
+    <div class="form-group">
+        <label for="reason">Insert the reason</label>
+        <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
+      </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 
 
 @endsection
