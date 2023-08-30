@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payed_amound', function (Blueprint $table) {
+        Schema::create('payed_amounds', function (Blueprint $table) {
 
             //den exo kanei akoma migrate to sugkekrimeno
             $table->id();
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('category_id'); //foreign key to category tabe
             $table->integer('user_id');     //foreign key to user table
             $table->integer('currency_id'); //foreign key to currency table
+            $table->boolean('is_negative')->default(true);
             $table->timestamps();
                                     //add and more columns in the structure
         });

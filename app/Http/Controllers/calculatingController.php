@@ -7,8 +7,8 @@ use App\Models\Post;
 
 class calculatingController extends Controller
 {
-    public function index($d) {
-        return $d;
+    public function index(Request $request) {
+        return view('index');
     }
 
     public function pyli() {

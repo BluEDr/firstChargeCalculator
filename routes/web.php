@@ -16,10 +16,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [calculatingController::class, 'index'])->name('index');
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';
@@ -31,7 +28,7 @@ Route::get('/hello', function() {
 
 Route::get('/pyli', [calculatingController::class, 'pyli']);
 
-Route::get('/dokimi/{id}',  [calculatingController::class, 'index']);
+// Route::get('/dokimi/{id}',  [calculatingController::class, 'index']);
 
 Route::get('/pyli/{ttr}', [calculatingController::class, 'pyliTtr']);
 
