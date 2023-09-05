@@ -20,10 +20,12 @@ return new class extends Migration
             $table->float('price',8,2); //edo den ksero an prepei na balo real, Double, or something else
             $table->string('reason');
             $table->integer('category_id'); //foreign key to category tabe
-            $table->integer('user_id');     //foreign key to user table
-            $table->integer('currency_id'); //foreign key to currency table
+            $table->unsignedBigInteger('user_id');     //foreign key to user table 
+            $table->unsignedBigInteger('currency_id'); //foreign key to currency table
             $table->boolean('is_negative')->default(true);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('cascade');
                                     //add and more columns in the structure
         });
     }
