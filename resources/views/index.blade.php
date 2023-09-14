@@ -1,9 +1,23 @@
 @extends('layouts.app2')
 @section('content')
-    {{$l}}
+
+{{-- @if (Auth::check())
+    {{Auth::user()->name}}
+@endif
+
+@if (is_integer(55.2))
+    <p>float</p>
+    
+@else
+    
+    <p>not float</p>
+@endif --}}
+
+
+<p>{{$l}}</p>
 <p>{{$a}}</p>
 <p>{{$b}}</p>
-<form method="POST">
+<form onsubmit="validateForm()"> 
     @csrf
     <div class="form-group">
       <label for="price">Insert the price</label>
@@ -13,7 +27,7 @@
         <label for="reason">Insert the reason</label>
         <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
       </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 
 

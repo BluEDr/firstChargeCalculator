@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 @section('content')
     
-
+    
     <h2>Hello World!</h2>
 
 

@@ -40,6 +40,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet" />
+        <script src="{{asset("js/validations.js")}}"></script>
     </head>
 
     <body>
