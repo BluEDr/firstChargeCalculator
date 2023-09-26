@@ -14,10 +14,13 @@
 @endif --}}
 
 
-<p>{{$l}}</p>
-<p>{{$a}}</p>
-<p>{{$b}}</p>
-<form onsubmit="validateForm()"> 
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
+<form method="POST" action="{{ route('processForm') }}">
     @csrf
     <div class="form-group">
       <label for="price">Insert the price</label>

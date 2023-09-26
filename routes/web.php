@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\listing;
+use App\Http\Controllers;
 use App\Http\Controllers\calculatingController;
 use App\Http\Controllers\HomeController;
 
@@ -16,7 +17,10 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::any('/', [calculatingController::class, 'index'])->name('index');
+Route::any('/', [calculatingController::class,'showIndex'])->name('index');
+Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
+
+
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';

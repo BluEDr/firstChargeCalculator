@@ -7,6 +7,9 @@ use App\Models\Post;
 
 class calculatingController extends Controller
 {
+    public function showIndex() {
+        return view('index');
+    }
     public function index(Request $request) {
         $a1 = 1;
         $a2 = 2;
@@ -42,5 +45,20 @@ class calculatingController extends Controller
         echo "$post";
         $post->delete();
         return redirect('insert');
+    }
+    
+    public function processForm(Request $request) {
+        echo "all goooooooood";
+        $request->validate([
+            'price' => 'required|numeric',
+        ]);
+
+        $number = $request->input('price');
+
+        if (is_numeric($number)) {
+            return redirect()->route('home2'); // Redirect to success page
+        } else {
+            return redirect()->route('index')->with('error', 'Please enter a valid real number.'); // Redirect back to the form with an error message
+        }
     }
 }
