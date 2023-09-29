@@ -7,8 +7,27 @@ use App\Models\Post;
 
 class calculatingController extends Controller
 {
-    public function showIndex() {
-        return view('index');
+    public function showIndex(Request $request) {
+        echo $request->method();
+        if ($request->method() == 'POST') {
+            echo $request->input('price');
+
+            // $request->validate([
+            //     'price' => 'required|numeric',
+            // ]);
+    
+            $number = $request->input('price');
+            if (is_numeric($number) && is_float($number + 0.0)) {
+                $a = $request->get('price');
+                return view('index')->with('errorCheck',$a);
+            } else {
+                $a = 'errorCheck';
+                return view('index')->with('errorCheck','This is not a correct price value.');            
+            }
+            
+        } else {
+            return view('index')->with('errorCheck','GET METHODDDDD');
+        }
     }
     public function index(Request $request) {
         $a1 = 1;
@@ -48,7 +67,6 @@ class calculatingController extends Controller
     }
     
     public function processForm(Request $request) {
-        echo "all goooooooood";
         $request->validate([
             'price' => 'required|numeric',
         ]);
@@ -58,7 +76,8 @@ class calculatingController extends Controller
         if (is_numeric($number)) {
             return redirect()->route('home2'); // Redirect to success page
         } else {
-            return redirect()->route('index')->with('error', 'Please enter a valid real number.'); // Redirect back to the form with an error message
+            $a = 'errorCheck';
+            return redirect()->route('index')->with($a, 'Please enter a valid real number.'); // Redirect back to the form with an error message
         }
     }
 }

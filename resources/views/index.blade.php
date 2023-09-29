@@ -14,22 +14,62 @@
 @endif --}}
 
 
-@if(session('error'))
+{{-- @if(!session('errorCheck'))
 <div class="alert alert-danger">
-    {{ session('error') }}
+   AAAAAAAAAAAAAAAAAAA
 </div>
+@endif --}}
+
+{{-- @if(session('errorCheck')) --}}
+@if(!empty('errorCheck'))
+    <div class="alert alert-danger">
+        {{ $errorCheck }}
+    </div>
 @endif
 
-<form method="POST" action="{{ route('processForm') }}">
+<form method="POST" action="">
     @csrf
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+            Add Money
+        </label>
+    </div>
     <div class="form-group">
-      <label for="price">Insert the price</label>
+      <label for="price">Insert the price *</label>
       <input type="text" class="form-control" name="price" id="price" placeholder="Default input">
     </div>
     <div class="form-group">
-        <label for="reason">Insert the reason</label>
+        <label for="reason">Insert the reason (Not required)</label>
         <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
-      </div>
+    </div>
+    
+    <div class="form-group">Category:</div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Daily
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+        <label class="form-check-label" for="flexRadioDefault2">
+            Gas
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+        <label class="form-check-label" for="flexRadioDefault3">
+            Super Market
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+        <label class="form-check-label" for="flexRadioDefault4">
+            Bill
+        </label>
+    </div>
+
     <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 
