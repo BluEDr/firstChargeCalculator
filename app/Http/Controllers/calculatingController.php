@@ -4,29 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-
+use App\Models\payed_amound;
 class calculatingController extends Controller
 {
     public function showIndex(Request $request) {
-        echo $request->method();
+        // echo $request->method();
         if ($request->method() == 'POST') {
-            echo $request->input('price');
-
-            // $request->validate([
-            //     'price' => 'required|numeric',
-            // ]);
-    
+            // echo $request->input('price');
+            
+            echo $request->input('defaultCheck11');
             $number = $request->input('price');
             if (is_numeric($number) && is_float($number + 0.0)) {
-                $a = $request->get('price');
-                return view('index')->with('errorCheck',$a);
+                $payed_amound = new payed_amound();
+                $payed_amound->price = $number+0.0;
+                $payed_amound->reason = $request->get('reason');
+                $payed_amound->category_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                $payed_amound->user_id = 1;     //todo na antlo ta dedomena gia tin kataxorisi
+                $payed_amound->currency_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                if ($request->has('defaultCheck11')) {
+                    $payed_amound->is_negative = 1;
+                } else {
+                    $payed_amound->is_negative = 0;
+                }
+                $payed_amound->save();
+                $a = $request->input('defaultCheck11');
+                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0);
             } else {
                 $a = 'errorCheck';
                 return view('index')->with('errorCheck','This is not a correct price value.');            
             }
             
         } else {
-            return view('index')->with('errorCheck','GET METHODDDDD');
+            return view('index');
         }
     }
     public function index(Request $request) {

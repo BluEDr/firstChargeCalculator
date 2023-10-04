@@ -14,23 +14,24 @@
 @endif --}}
 
 
-{{-- @if(!session('errorCheck'))
+@if(!empty($tiramisou))
 <div class="alert alert-danger">
-   AAAAAAAAAAAAAAAAAAA
+    aaaaaaaaaa
+   {{$tiramisou}}
 </div>
-@endif --}}
+@endif
 
 {{-- @if(session('errorCheck')) --}}
-@if(!empty('errorCheck'))
+@if(!empty($errorCheck))
     <div class="alert alert-danger">
-        {{ $errorCheck }}
+        {{ $errorCheck }} 
     </div>
 @endif
 
 <form method="POST" action="">
     @csrf
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
         <label class="form-check-label" for="defaultCheck1">
             Add Money
         </label>
