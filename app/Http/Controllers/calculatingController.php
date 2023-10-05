@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\payed_amound;
 use App\Models\category;
+use App\Models\currency;
+use Auth;
 class calculatingController extends Controller
 {
     public function showIndex(Request $request) {
         // echo $request->method();
         $options = category::all();
+        $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
             
@@ -24,9 +27,13 @@ class calculatingController extends Controller
                     $payed_amound->category_id = $request->get('selected_option');
                 else
                     $payed_amound->category_id = -1;
-                // $payed_amound->category_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
-                $payed_amound->user_id = 1;     //todo na antlo ta dedomena gia tin kataxorisi
-                $payed_amound->currency_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                $payed_amound->user_id = Auth::user()->id;     //todo na antlo ta dedomena gia tin kataxorisi
+                // $payed_amound->currency_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                if(count($currency_options)>0) 
+                    $payed_amound->currency_id = $request->get('dropdown_currency');
+                else
+                    $payed_amound->currency_id = -1;    
+
                 if ($request->has('defaultCheck11')) {
                     $payed_amound->is_negative = 1;
                 } else {
@@ -34,14 +41,14 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'));
+                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'));
             } else {
                 $a = 'errorCheck';
-                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'));            
+                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'));            
             }
             
         } else {
-            return view('index')->with(compact('options'));
+            return view('index')->with(compact('options'))->with(compact('currency_options'));
         }
     }
     public function index(Request $request) {

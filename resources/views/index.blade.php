@@ -54,6 +54,24 @@
             </label><br>
         @endforeach
     @endif
+
+
+    @if (count($currency_options) > 0)
+        <div class="form-group col-md-4">
+            <label for="inputState">Currency</label>
+            <select id="inputState" name='dropdown_currency' class="form-control">
+            
+            @foreach ($currency_options as $option)
+                <label>
+                    <option class="form-control" name="dropdown_currency" value="{{ $option->id }}" {{ $loop->first ? 'selected' : '' }} >
+                    {{ $option->name }}
+                </label><br>
+            @endforeach
+
+            </select>
+        </div>
+    @endif
+
     <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 
