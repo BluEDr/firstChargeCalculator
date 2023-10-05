@@ -45,32 +45,15 @@
         <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
     </div>
     
-    <div class="form-group">Category:</div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-        <label class="form-check-label" for="flexRadioDefault1">
-            Daily
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-        <label class="form-check-label" for="flexRadioDefault2">
-            Gas
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-        <label class="form-check-label" for="flexRadioDefault3">
-            Super Market
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
-        <label class="form-check-label" for="flexRadioDefault4">
-            Bill
-        </label>
-    </div>
-
+    @if (count($options) > 0)
+        <div class="form-group">Category:</div>
+        @foreach ($options as $option)
+            <label>
+                <input class="form-check-input" type="radio" name="selected_option" value="{{ $option->id }}" {{ $loop->first ? 'checked' : '' }} >
+                {{ $option->name }}
+            </label><br>
+        @endforeach
+    @endif
     <input type="submit" value="Submit" class="btn btn-primary">
   </form>
 

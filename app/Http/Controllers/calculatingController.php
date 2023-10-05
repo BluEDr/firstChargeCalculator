@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\payed_amound;
+use App\Models\category;
 class calculatingController extends Controller
 {
     public function showIndex(Request $request) {
         // echo $request->method();
+        $options = category::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
             
@@ -18,7 +20,11 @@ class calculatingController extends Controller
                 $payed_amound = new payed_amound();
                 $payed_amound->price = $number+0.0;
                 $payed_amound->reason = $request->get('reason');
-                $payed_amound->category_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                if (count($options) > 0)
+                    $payed_amound->category_id = $request->get('selected_option');
+                else
+                    $payed_amound->category_id = -1;
+                // $payed_amound->category_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
                 $payed_amound->user_id = 1;     //todo na antlo ta dedomena gia tin kataxorisi
                 $payed_amound->currency_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
                 if ($request->has('defaultCheck11')) {
@@ -28,14 +34,14 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0);
+                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'));
             } else {
                 $a = 'errorCheck';
-                return view('index')->with('errorCheck','This is not a correct price value.');            
+                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'));            
             }
             
         } else {
-            return view('index');
+            return view('index')->with(compact('options'));
         }
     }
     public function index(Request $request) {
