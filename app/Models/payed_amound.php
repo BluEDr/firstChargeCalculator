@@ -15,11 +15,11 @@ class payed_amound extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id'); //ayto xreiazete gia na deiloso to kseno kleidi ston pinaka users
     }
-    // public function user() {
-    //     return this->belongsTo(User::class);
-    // }
+
+    public function category() {
+        return $this->belongsTo(category::class, 'category_id', 'id');
+    }
 }

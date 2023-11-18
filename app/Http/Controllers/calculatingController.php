@@ -41,7 +41,7 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                $pAmound = payed_amound::select('id','price','reason','user_id')->with('user')->where('price','>',350)->orderBy('price','desc')->get();
+                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('price','>',350)->orderBy('price','desc')->get();
                 return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
