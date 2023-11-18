@@ -27,55 +27,72 @@
         {{ $errorCheck }} 
     </div>
 @endif
-
-<form method="POST" action="">
-    @csrf
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
-        <label class="form-check-label" for="defaultCheck1">
-            Add Money
-        </label>
-    </div>
-    <div class="form-group">
-      <label for="price">Insert the price *</label>
-      <input type="text" class="form-control" name="price" id="price" placeholder="Default input">
-    </div>
-    <div class="form-group">
-        <label for="reason">Insert the reason (Not required)</label>
-        <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
-    </div>
-    
-    @if (count($options) > 0)
-        <div class="form-group">Category:</div>
-        @foreach ($options as $option)
-            <label>
-                <input class="form-check-input" type="radio" name="selected_option" value="{{ $option->id }}" {{ $loop->first ? 'checked' : '' }} >
-                {{ $option->name }}
-            </label><br>
-        @endforeach
-    @endif
-
-
-    @if (count($currency_options) > 0)
-        <div class="form-group col-md-4">
-            <label for="inputState">Currency</label>
-            <select id="inputState" name='dropdown_currency' class="form-control">
-            
-            @foreach ($currency_options as $option)
+<div style="display: flex; border:dashed green; margin:5px">
+<div class="custom-div">
+    <form method="POST" action="">
+        @csrf
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
+            <label class="form-check-label" for="defaultCheck1">
+                Add Money
+            </label>
+        </div>
+        <div class="form-group">
+        <label for="price">Insert the price *</label>
+        <input type="text" class="form-control" name="price" id="price" placeholder="Default input">
+        </div>
+        <div class="form-group">
+            <label for="reason">Insert the reason (Not required)</label>
+            <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
+        </div>
+        
+        @if (count($options) > 0)
+            <div class="form-group">Category:</div>
+            @foreach ($options as $option)
                 <label>
-                    <option class="form-control" name="dropdown_currency" value="{{ $option->id }}" {{ $loop->first ? 'selected' : '' }} >
+                    <input class="form-check-input" type="radio" name="selected_option" value="{{ $option->id }}" {{ $loop->first ? 'checked' : '' }} >
                     {{ $option->name }}
                 </label><br>
             @endforeach
-
-            </select>
-        </div>
-    @endif
-
-    <input type="submit" value="Submit" class="btn btn-primary">
-  </form>
+        @endif
 
 
+        @if (count($currency_options) > 0)
+            <div class="form-group col-md-4">
+                <label for="inputState">Currency</label>
+                <select id="inputState" name='dropdown_currency' class="form-control">
+
+                
+                @foreach ($currency_options as $option)
+                    <label>
+                        <option class="form-control" name="dropdown_currency" value="{{ $option->id }}" {{ $loop->first ? 'selected' : '' }} >
+                        {{ $option->name }}
+                    </label><br>
+                @endforeach
+                
+
+                </select>
+            </div>
+        @endif
+
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+    <div class="custom-div2">
+        @if (!empty($pAmound))
+            <table>
+                @foreach($pAmound as $pA)
+                    <tr>
+                        <td>{{$pA->id}}</td>
+                        <td>{{$pA->price}}</td>
+                        <td>{{$pA->reason}}</td>
+                        <td>{{$pA->user->name}}</td>
+                    </tr>
+                @endforeach
+            </table>
+        @endif
+    </div>
+</div>
 @endsection
 
 

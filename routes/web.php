@@ -17,7 +17,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::any('/', [calculatingController::class,'showIndex'])->name('index');
+Route::any('/', [calculatingController::class,'showIndex'])->name('index')->middleware('auth');
 Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
 
 

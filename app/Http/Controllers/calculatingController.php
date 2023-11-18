@@ -13,6 +13,7 @@ class calculatingController extends Controller
     public function showIndex(Request $request) {
         // echo $request->method();
         $options = category::all();
+        $pAmound = payed_amound::all();
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
@@ -27,8 +28,7 @@ class calculatingController extends Controller
                     $payed_amound->category_id = $request->get('selected_option');
                 else
                     $payed_amound->category_id = -1;
-                $payed_amound->user_id = Auth::user()->id;     //todo na antlo ta dedomena gia tin kataxorisi
-                // $payed_amound->currency_id = 1; //todo na antlo ta dedomena gia tin kataxorisi
+                $payed_amound->user_id = Auth::user()->id;     //todo an den eisai loged in crasharei
                 if(count($currency_options)>0) 
                     $payed_amound->currency_id = $request->get('dropdown_currency');
                 else
@@ -41,24 +41,26 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'));
+                $pAmound = payed_amound::select('id','price','reason','user_id')->with('user')->where('price','>',350)->orderBy('price','desc')->get();
+                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
-                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'));            
+                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
             }
             
         } else {
-            return view('index')->with(compact('options'))->with(compact('currency_options'));
+            return view('index')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
         }
     }
     public function index(Request $request) {
         $a1 = 1;
         $a2 = 2;
+        $pAmound = payed_amound::all();
         if($request->method()=='POST') {
             $a1 = $request->get('price');
             $a2 = $request->get('reason');
         }
-        return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2]);
+        return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2, compact('pAmound')]); //todo na to do me to pAmound
     }
 
     public function pyli() {
