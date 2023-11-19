@@ -72,9 +72,7 @@
     </form>
 </div>
     <div class="custom-div2">
-        @if(!empty($pAmoundSum))
-            <p>{{$pAmoundSum}}</p>
-        @endif
+        <div class="custom-div-70">
         @if (!empty($pAmound))
             <table>
                 <tr>
@@ -95,6 +93,17 @@
                 @endforeach
             </table>
         @endif
+        </div>
+        <div class="custom-div-30">
+            <p>
+            @if(!empty($pAmoundSum))
+                Total Price: {{$pAmoundSum}} <br>
+            @endif
+            @if(!empty($pMonthsSum))
+                Total Price from this month: {{$pMonthsSum}}
+            @endif
+            </p>
+        </div>
     </div>
 </div>
 @endsection

@@ -20,12 +20,21 @@
     border-color: red;
 }
 .custom-div2 {
+    display: flex;
     flex: 75%;
     margin-top: 15px;
     margin-left: 20px;
     padding: 20px;
     border: dotted;
     border-color: red;
+}
+.custom-div-30 {
+    flex: 40%;
+    border: dotted red;
+}
+.custom-div-70 {
+    flex: 70%;
+    border: dotted red;
 }
 
 tr,

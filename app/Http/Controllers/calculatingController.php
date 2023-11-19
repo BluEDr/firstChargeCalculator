@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection; //ayto to ebala gia na mporo na steilo dedomena typoy Collection stin argument metabliti tis synartisis pAmoundS
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\payed_amound;
@@ -17,7 +18,7 @@ class calculatingController extends Controller
         // echo $request->method();
         $options = category::all();
         $pAmound = payed_amound::all();
-        $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
+        $pAmound = payed_amound::select('id','price','reason','user_id','category_id','created_at')->with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
@@ -46,19 +47,34 @@ class calculatingController extends Controller
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
                 echo $userid;
-                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('user_id',$userid)->get();
+                $pAmound = payed_amound::select('id','price','reason','user_id','category_id','created_at')->with('user','category')->where('user_id',$userid)->get();
                 $pAmoundSum = $this->pAmoundS($pAmound);
-                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+                $monthsPriceSum = $this->monthsSum($pAmound);
+                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
                 $pAmoundSum = $this->pAmoundS($pAmound);
-                return view('index')->with('pAmoundSum',$pAmoundSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
+                $monthsPriceSum = $this->monthsSum($pAmound);
+                return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
             }
             
         } else {
             $pAmoundSum = $this->pAmoundS($pAmound);
-            return view('index')->with('pAmoundSum',$pAmoundSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+            $monthsPriceSum = $this->monthsSum($pAmound);
+            return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
         }
+    }
+
+    private function monthsSum(Collection $pAmound) {
+        $sum = 0;
+        $currentMonth = Carbon::now()->month;
+        foreach ($pAmound as $p) {
+            $createdMonth = Carbon::parse($p->created_at)->month; 
+            if ($createdMonth == $currentMonth) {
+                $sum += $p->price;
+            }
+        }
+        return $sum;
     }
 
     private function pAmoundS(Collection $pAmound) {
