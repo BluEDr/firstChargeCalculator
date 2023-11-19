@@ -81,12 +81,18 @@
     <div class="custom-div2">
         @if (!empty($pAmound))
             <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Price</th>
+                    <th>Reason</th>
+                    <th>Category</th>
+                </tr>
                 @foreach($pAmound as $pA)
                     <tr>
                         <td>{{$pA->id}}</td>
                         <td>{{$pA->price}}</td>
                         <td>{{$pA->reason}}</td>
-                        <td>{{$pA->user->name}}</td>
+                        {{-- <td>{{$pA->user->name}}</td> --}}
                         <td>{{ optional($pA->category)->name }}</td> {{--edo eixakanei lathos kai eixa category id to opoio den yparxei. kai xoris to optional epeidi den to ebriske gia na emfanisei to name moy ebgaze sfalma --}}
                         {{-- <td>{{$pA->category->name}}</td> --}}
                     </tr>

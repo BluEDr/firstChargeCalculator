@@ -29,6 +29,7 @@
 }
 
 tr,
+th,
 td {
     border: 2px solid rgb(255, 121, 215);
     text-align: center;

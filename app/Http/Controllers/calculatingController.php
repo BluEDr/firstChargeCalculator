@@ -11,9 +11,12 @@ use Auth;
 class calculatingController extends Controller
 {
     public function showIndex(Request $request) {
+        $username = Auth::user()->name;
+        $userid = Auth::user()->id;
         // echo $request->method();
         $options = category::all();
         $pAmound = payed_amound::all();
+        $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
@@ -41,7 +44,8 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('price','>',350)->orderBy('price','desc')->get();
+                echo $userid;
+                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('price','>',350)->where('user_id',$userid)->get();
                 return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
