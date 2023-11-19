@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection; //ayto to ebala gia na mporo na steilo dedomena typoy Collection stin argument metabliti tis synartisis pAmoundS
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\payed_amound;
@@ -45,17 +46,29 @@ class calculatingController extends Controller
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
                 echo $userid;
-                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('price','>',350)->where('user_id',$userid)->get();
-                return view('index')->with('errorCheck',$a)->with('tiramisou', $a+0.0)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+                $pAmound = payed_amound::select('id','price','reason','user_id','category_id')->with('user','category')->where('user_id',$userid)->get();
+                $pAmoundSum = $this->pAmoundS($pAmound);
+                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
-                return view('index')->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
+                $pAmoundSum = $this->pAmoundS($pAmound);
+                return view('index')->with('pAmoundSum',$pAmoundSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
             }
             
         } else {
-            return view('index')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+            $pAmoundSum = $this->pAmoundS($pAmound);
+            return view('index')->with('pAmoundSum',$pAmoundSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
         }
     }
+
+    private function pAmoundS(Collection $pAmound) {
+        $sum = 0;
+        foreach($pAmound as $pRow){
+            $sum += $pRow->price;
+        }
+        return $sum;
+    }
+
     public function index(Request $request) {
         $a1 = 1;
         $a2 = 2;

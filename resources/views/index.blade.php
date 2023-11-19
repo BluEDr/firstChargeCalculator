@@ -14,13 +14,6 @@
 @endif --}}
 
 
-@if(!empty($tiramisou))
-<div class="alert alert-danger">
-    aaaaaaaaaa
-   {{$tiramisou}}
-</div>
-@endif
-
 {{-- @if(session('errorCheck')) --}}
 @if(!empty($errorCheck))
     <div class="alert alert-danger">
@@ -79,6 +72,9 @@
     </form>
 </div>
     <div class="custom-div2">
+        @if(!empty($pAmoundSum))
+            <p>{{$pAmoundSum}}</p>
+        @endif
         @if (!empty($pAmound))
             <table>
                 <tr>
