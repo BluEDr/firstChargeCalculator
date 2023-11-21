@@ -64,10 +64,10 @@
             class="navbar navbar-expand-lg bg-white navbar-light shadow border-top border-5 border-primary sticky-top p-0"
         >
             <a
-                href="index.html"
+                href="/"
                 class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5"
             >
-                <h2 class="mb-2 text-white">Logistica</h2>
+                <h2 class="mb-2 text-white">Charge Calculator</h2>
             </a>
             <button
                 type="button"
@@ -83,37 +83,11 @@
                         >Home</a
                     >
                     <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link"
-                        >Services</a
-                    >
-                    <div class="nav-item dropdown">
-                        <a
-                            href="#"
-                            class="nav-link dropdown-toggle"
-                            data-bs-toggle="dropdown"
-                            >Pages</a
+                    @Auth
+                        <a href="{{route('settings')}}" class="nav-item nav-link"
+                            >Settings</a
                         >
-                        <div class="dropdown-menu fade-up m-0">
-                            <a href="price.html" class="dropdown-item"
-                                >Pricing Plan</a
-                            >
-                            <a href="feature.html" class="dropdown-item"
-                                >Features</a
-                            >
-                            <a href="quote.html" class="dropdown-item"
-                                >Free Quote</a
-                            >
-                            <a href="team.html" class="dropdown-item"
-                                >Our Team</a
-                            >
-                            <a href="testimonial.html" class="dropdown-item"
-                                >Testimonial</a
-                            >
-                            <a href="404.html" class="dropdown-item"
-                                >404 Page</a
-                            >
-                        </div>
-                    </div>
+                    @endauth
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
                 

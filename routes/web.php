@@ -5,6 +5,7 @@ use App\Models\listing;
 use App\Http\Controllers;
 use App\Http\Controllers\calculatingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\settingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\HomeController;
 Route::any('/', [calculatingController::class,'showIndex'])->name('index')->middleware('auth');
 Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
 
-
+Route::any('/settings', [settingController::class, 'index'])->name('settings')->middleware('auth');
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';

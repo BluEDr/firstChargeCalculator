@@ -17,8 +17,7 @@ class calculatingController extends Controller
         $userid = Auth::user()->id;
         // echo $request->method();
         $options = category::all();
-        $pAmound = payed_amound::all();
-        $pAmound = payed_amound::select('id','price','reason','user_id','category_id','created_at')->with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
+        $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
@@ -47,7 +46,7 @@ class calculatingController extends Controller
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
                 echo $userid;
-                $pAmound = payed_amound::select('id','price','reason','user_id','category_id','created_at')->with('user','category')->where('user_id',$userid)->get();
+                $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->get();
                 $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
@@ -71,7 +70,11 @@ class calculatingController extends Controller
         foreach ($pAmound as $p) {
             $createdMonth = Carbon::parse($p->created_at)->month; 
             if ($createdMonth == $currentMonth) {
-                $sum += $p->price;
+                if ($p->is_negative)
+                    $sum -= $p->price;
+                else
+                    $sum += $p->price;
+
             }
         }
         return $sum;
@@ -80,7 +83,10 @@ class calculatingController extends Controller
     private function pAmoundS(Collection $pAmound) {
         $sum = 0;
         foreach($pAmound as $pRow){
-            $sum += $pRow->price;
+            if ($pRow->is_negative)
+                $sum -= $pRow->price;
+            else
+                $sum += $pRow->price;
         }
         return $sum;
     }
@@ -93,7 +99,7 @@ class calculatingController extends Controller
             $a1 = $request->get('price');
             $a2 = $request->get('reason');
         }
-        return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2, compact('pAmound')]); //todo na to do me to pAmound
+        return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2, compact('pAmound')]); 
     }
 
     public function pyli() {
