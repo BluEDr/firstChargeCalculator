@@ -3,6 +3,15 @@
 <div style="display: flex; border:dashed green; margin:5px">
     <div class="custom-div">
         <p>Hello {{$username}}</p>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @if (!empty($sallary))
             <p>Your sallary amound is: {{$sallary}}</p>
         @endif
