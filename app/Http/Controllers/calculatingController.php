@@ -123,6 +123,18 @@ class calculatingController extends Controller
         }
         return view('insertValue', ['l' => $request->method(), 't'=>5122, 'db' => null]);
     }
+
+    public function deleteRow($deletedId) {
+        $rowToDelete = payed_amound::where('id',$deletedId)->first();
+        if ($rowToDelete){
+            $rowToDelete->delete();
+            return redirect()->back()->with('success', 'Row deleted successfully');
+        } else {
+            return redirect()->back()->with('error', 'Row not found');
+        }
+            
+    }
+
     public function postDelete(Post $post){
         echo "$post";
         $post->delete();

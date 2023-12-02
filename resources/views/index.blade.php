@@ -79,14 +79,16 @@
                     <th>Price</th>
                     <th>Reason</th>
                     <th>Category</th>
+                    <th>Delete</th>
                 </tr>
                 @foreach($pAmound as $pA)
                     <tr>
                         <td>{{$pA->price}}</td>
                         <td>{{$pA->reason}}</td>
                         {{-- <td>{{$pA->user->name}}</td> --}}
-                        <td>{{ optional($pA->category)->name }}</td> {{--edo eixakanei lathos kai eixa category id to opoio den yparxei. kai xoris to optional epeidi den to ebriske gia na emfanisei to name moy ebgaze sfalma --}}
-                        {{-- <td>{{$pA->category->name}}</td> --}}
+                        <td>{{ optional($pA->category)->name }}</td> 
+                        {{-- <td><a href="{{route('delete.row',$pA->id)}}">del</a></td> --}}
+                        <td><a href="#" onclick='confirmAndDelete("{{route("delete.row",$pA->id)}}")'>del</a></td>
                     </tr>
                 @endforeach
             </table>
@@ -104,6 +106,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmAndDelete(rowId) {
+        if(confirm('Are you sure, you want to delete this item?')) {
+            // window.location.href = "/delete-row/";
+            window.location.href = rowId;
+        }
+
+    }
+</script>
 @endsection
 
 

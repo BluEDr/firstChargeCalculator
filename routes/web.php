@@ -22,6 +22,7 @@ Route::any('/', [calculatingController::class,'showIndex'])->name('index')->midd
 Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
 
 Route::any('/settings', [settingController::class, 'index'])->name('settings')->middleware('auth');
+Route::get('/delete-row/{priceValue}', [calculatingController::class, 'deleteRow'])->name('delete.row')->middleware('auth');
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';
