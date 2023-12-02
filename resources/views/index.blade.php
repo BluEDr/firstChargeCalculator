@@ -83,7 +83,11 @@
                 </tr>
                 @foreach($pAmound as $pA)
                     <tr>
-                        <td>{{$pA->price}}</td>
+                        @if ($pA->is_negative)
+                            <td>+{{$pA->price}}</td>
+                        @else
+                            <td>-{{$pA->price}}</td>
+                        @endif
                         <td>{{$pA->reason}}</td>
                         {{-- <td>{{$pA->user->name}}</td> --}}
                         <td>{{ optional($pA->category)->name }}</td> 

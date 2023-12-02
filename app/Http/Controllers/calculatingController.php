@@ -27,7 +27,10 @@ class calculatingController extends Controller
             if (is_numeric($number) && is_float($number + 0.0)) {
                 $payed_amound = new payed_amound();
                 $payed_amound->price = $number+0.0;
-                $payed_amound->reason = $request->get('reason');
+                if($request->get('reason') == null) 
+                    $payed_amound->reason = "";
+                else
+                    $payed_amound->reason = $request->get('reason');
                 if (count($options) > 0)
                     $payed_amound->category_id = $request->get('selected_option');
                 else
@@ -49,6 +52,8 @@ class calculatingController extends Controller
                 $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->get();
                 $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
+                // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
+                echo $this->calulateSummaryWhileNow($monthsPriceSum);
                 return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
             } else {
                 $a = 'errorCheck';
@@ -62,6 +67,10 @@ class calculatingController extends Controller
             $monthsPriceSum = $this->monthsSum($pAmound);
             return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
         }
+    }
+
+    private function calulateSummaryWhileNow(float $monthsPriceSum) {
+        return $monthsPriceSum/2;   //todo na teleioso tin synartisi poy na upologizei mexri ekeini tin stigmi poso meion i sin eimai
     }
 
     private function monthsSum(Collection $pAmound) {
