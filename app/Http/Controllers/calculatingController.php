@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\payed_amound;
 use App\Models\category;
 use App\Models\currency;
+use App\Models\Sallary;
 use Auth;
 class calculatingController extends Controller
 {
@@ -17,7 +18,9 @@ class calculatingController extends Controller
         $userid = Auth::user()->id;
         // echo $request->method();
         $options = category::all();
-        $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->get(); //->orderBy('price','desc')
+        $today = Carbon::now();
+        $todayDate = $today->toDateString();
+        $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get(); //->orderBy('price','desc')
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             // echo $request->input('price');
@@ -49,28 +52,45 @@ class calculatingController extends Controller
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
                 echo $userid;
-                $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->get();
+                $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get();
                 $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
-                echo $this->calulateSummaryWhileNow($monthsPriceSum);
-                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+                $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
+                $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
+                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));
             } else {
                 $a = 'errorCheck';
                 $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
-                return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));            
+                $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
+                $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
+                return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));          
             }
             
         } else {
             $pAmoundSum = $this->pAmoundS($pAmound);
             $monthsPriceSum = $this->monthsSum($pAmound);
-            return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'));
+            $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
+            $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
+            return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));
         }
     }
 
-    private function calulateSummaryWhileNow(float $monthsPriceSum) {
-        return $monthsPriceSum/2;   //todo na teleioso tin synartisi poy na upologizei mexri ekeini tin stigmi poso meion i sin eimai
+    private function calulateSummaryWhileNow(float $monthsPriceSum,int $userid) {
+        $today = Carbon::now();
+        $dayOfMonth = $today->day;
+        $summaryWhileNow = ($this->howMuchPerDay($monthsPriceSum,$userid)*$dayOfMonth)-$monthsPriceSum;
+        return number_format($summaryWhileNow,2); 
+    }
+
+    private function howMuchPerDay(float $monthsPriceSum,int $userid) {
+        $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
+        $today = Carbon::now();
+        $dayOfMonth = $today->day;
+        $maxDaysInMonth = $today->daysInMonth;
+        $moneyThatICanSpendDaily = number_format($sal->sallary/$maxDaysInMonth,2);
+        return number_format($moneyThatICanSpendDaily,2); 
     }
 
     private function monthsSum(Collection $pAmound) {

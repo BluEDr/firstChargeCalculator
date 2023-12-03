@@ -78,10 +78,12 @@
                 <tr>
                     <th>Price</th>
                     <th>Reason</th>
+                    <th>Date</th>
                     <th>Category</th>
                     <th>Delete</th>
                 </tr>
                 @foreach($pAmound as $pA)
+                    {{-- @if($pA->created_at==) --}}
                     <tr>
                         @if ($pA->is_negative)
                             <td>+{{$pA->price}}</td>
@@ -89,6 +91,11 @@
                             <td>-{{$pA->price}}</td>
                         @endif
                         <td>{{$pA->reason}}</td>
+                        @if($pA->created_at->format('Y-m-d') == $todayDate)
+                            <td style="color:brown">Today</td>
+                        @else
+                            <td>{{$pA->created_at->format('Y-m-d')}}</td>
+                        @endif
                         {{-- <td>{{$pA->user->name}}</td> --}}
                         <td>{{ optional($pA->category)->name }}</td> 
                         {{-- <td><a href="{{route('delete.row',$pA->id)}}">del</a></td> --}}
@@ -104,7 +111,13 @@
                 Total Price: {{$pAmoundSum}} <br>
             @endif
             @if(!empty($pMonthsSum))
-                Total Price from this month: {{$pMonthsSum}}
+                Total Price from this month: {{$pMonthsSum}}<br>
+            @endif
+            @if(!empty($perDay))
+                You can spend {{$perDay}} per day. <br>
+            @endif
+            @if(!empty($summWhileNow))
+                Status Now: {{$summWhileNow}}<br>
             @endif
             </p>
         </div>
