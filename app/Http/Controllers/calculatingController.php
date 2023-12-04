@@ -56,8 +56,8 @@ class calculatingController extends Controller
                 $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
-                $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
+                $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
                 return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));
             } else {
                 $a = 'errorCheck';
@@ -86,6 +86,8 @@ class calculatingController extends Controller
 
     private function howMuchPerDay(float $monthsPriceSum,int $userid) {
         $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
+        if (!$sal)
+            return null;
         $today = Carbon::now();
         $dayOfMonth = $today->day;
         $maxDaysInMonth = $today->daysInMonth;
