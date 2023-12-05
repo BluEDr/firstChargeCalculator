@@ -73,7 +73,7 @@
 </div>
     <div class="custom-div2">
         <div class="custom-div-70">
-        @if (!empty($pAmound))
+        @if (count($pAmound)>0)
             <table>
                 <tr>
                     <th>Price</th>
@@ -103,6 +103,8 @@
                     </tr>
                 @endforeach
             </table>
+        @else
+            <p>There is no data added. Buy and save here your spended money data ;)</p>
         @endif
         </div>
         <div class="custom-div-30">
