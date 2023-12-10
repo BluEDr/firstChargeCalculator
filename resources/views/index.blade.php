@@ -108,20 +108,22 @@
         @endif
         </div>
         <div class="custom-div-30">
-            <p>
-            @if(!empty($pAmoundSum))
-                Total Price: {{$pAmoundSum}} <br>
-            @endif
+            
+            <table>
             @if(!empty($pMonthsSum))
-                Total Price from this month: {{$pMonthsSum}}<br>
+                <tr><td>Total spend from this month:</td><td> {{$pMonthsSum}}</td></tr>
             @endif
             @if(!empty($perDay))
-                You can spend {{$perDay}} per day. <br>
+                <tr><td>You can spend each single day</td><td> {{$perDay}}</td></tr>
             @endif
-            @if(!empty($summWhileNow))
-                Status Now: {{$summWhileNow}}<br>
+            @if(!empty($spentToday))
+                <tr><td>Today, you spent:</td><td> {{$spentToday}}</td></tr>
             @endif
-            </p>
+            @if(!empty($summWhileNow) && (count($pAmound) > 0) && (!empty($perDay))))
+                <tr><td>Status Now:</td><td style="background-color: black ; color: red; text-decoration-line: underline; font-weight:bold"> {{$summWhileNow}}</td></tr>
+            @endif
+            </table>
+            
         </div>
     </div>
 </div>

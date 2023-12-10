@@ -23,9 +23,6 @@ class calculatingController extends Controller
         $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get(); //->orderBy('price','desc')
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
-            // echo $request->input('price');
-            
-            echo $request->input('defaultCheck11');
             $number = $request->input('price');
             if (is_numeric($number) && is_float($number + 0.0)) {
                 $payed_amound = new payed_amound();
@@ -51,29 +48,28 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                echo $userid;
                 $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get();
-                $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
                 $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
-                return view('index')->with('errorCheck',$a)->with('pAmoundSum', $pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));
+                $spentToday = $this->todaySum($pAmound,$todayDate);
+                return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));
             } else {
                 $a = 'errorCheck';
-                $pAmoundSum = $this->pAmoundS($pAmound);
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
-                return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));          
+                $spentToday = $this->todaySum($pAmound,$todayDate);
+                return view('index')->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));          
             }
             
         } else {
-            $pAmoundSum = $this->pAmoundS($pAmound);
             $monthsPriceSum = $this->monthsSum($pAmound);
             $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
             $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
-            return view('index')->with('pAmoundSum',$pAmoundSum)->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'));
+            $spentToday = $this->todaySum($pAmound,$todayDate);
+            return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));
         }
     }
 
@@ -93,6 +89,19 @@ class calculatingController extends Controller
         $maxDaysInMonth = $today->daysInMonth;
         $moneyThatICanSpendDaily = number_format($sal->sallary/$maxDaysInMonth,2);
         return number_format($moneyThatICanSpendDaily,2); 
+    }
+
+    private function todaySum(Collection $pAmound, String $todayDate) { //todo edo
+        $sum = 0;
+        foreach($pAmound as $p) {
+            if($p->created_at->format('Y-m-d') == $todayDate) {
+                if($p->is_negative)
+                    $sum -= $p->price;
+                else
+                    $sum += $p->price;
+            }
+        }
+        return $sum;
     }
 
     private function monthsSum(Collection $pAmound) {
@@ -167,7 +176,6 @@ class calculatingController extends Controller
     }
 
     public function postDelete(Post $post){
-        echo "$post";
         $post->delete();
         return redirect('insert');
     }
