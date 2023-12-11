@@ -142,15 +142,6 @@ class calculatingController extends Controller
         return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2, compact('pAmound')]); 
     }
 
-    public function pyli() {
-        $akis = (100+4)/2;
-        return "Hello world " . $akis;
-    }
-    public function pyliTtr($a) {
-        $posts = Post::all();
-        return view('ttr',['q' => $posts]);
-    }
-
     public function insertValue(Request $request){
         if ($request->method()=='POST') {
             $post = new Post();

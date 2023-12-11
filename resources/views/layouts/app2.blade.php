@@ -82,13 +82,13 @@
                     <a href="/" class="nav-item nav-link active"
                         >Home</a
                     >
-                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="{{route('about')}}" class="nav-item nav-link">About</a>
                     @Auth
                         <a href="{{route('settings')}}" class="nav-item nav-link"
                             >Settings</a
                         >
                     @endauth
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
                 </div>
                 
                 <ul class="navbar-nav ms-auto">
@@ -138,7 +138,7 @@
         @yield('content')
 
             <!-- Footer Start -->
-            <div
+            {{-- <div
             class="container-fluid bg-dark text-light footer pt-5 wow fadeIn"
             data-wow-delay="0.1s"
             style="margin-top: 6rem"
@@ -235,7 +235,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Footer End -->
 
         <!-- Back to Top -->

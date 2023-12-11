@@ -104,11 +104,10 @@
                 @endforeach
             </table>
         @else
-            <p>There is no data added. Buy and save here your spended money data ;)</p>
+            <p>There is no data added. Buy and save here your spended money data ;) </p>
         @endif
         </div>
         <div class="custom-div-30">
-            
             <table>
             @if(!empty($pMonthsSum))
                 <tr><td>Total spend from this month:</td><td> {{$pMonthsSum}}</td></tr>
@@ -119,7 +118,7 @@
             @if(!empty($spentToday))
                 <tr><td>Today, you spent:</td><td> {{$spentToday}}</td></tr>
             @endif
-            @if(!empty($summWhileNow) && (count($pAmound) > 0) && (!empty($perDay))))
+            @if(!empty($summWhileNow) && (count($pAmound) > 0) && (!empty($perDay)))
                 <tr><td>Status Now:</td><td style="background-color: black ; color: red; text-decoration-line: underline; font-weight:bold"> {{$summWhileNow}}</td></tr>
             @endif
             </table>
