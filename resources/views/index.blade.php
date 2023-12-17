@@ -1,26 +1,12 @@
 @extends('layouts.app2',['activePage' => 'home'])
 @section('content')
 
-{{-- @if (Auth::check())
-    {{Auth::user()->name}}
-@endif
-
-@if (is_integer(55.2))
-    <p>float</p>
-    
-@else
-    
-    <p>not float</p>
-@endif --}}
-
-
-{{-- @if(session('errorCheck')) --}}
 @if(!empty($errorCheck))
     <div class="alert alert-danger">
         {{ $errorCheck }} 
     </div>
 @endif
-<div style="border:dashed green; margin:5px; display: flex" class="divbd">
+<div style="margin:5px; display: flex" class="divbd">
     <div class="custom-div-form">
 <div class="custom-div">
     <form method="POST" action="">

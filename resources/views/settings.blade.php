@@ -1,6 +1,6 @@
 @extends('layouts.app2',['activePage' => 'settings']) 
 @section('content')
-<div style="display: flex; border:dashed green; margin:5px">
+<div style="display: flex; margin:5px">
     <div class="custom-div">
         <p>Hello {{$username}}</p>
         @if ($errors->any())
@@ -13,7 +13,7 @@
             </div>
         @endif
         @if (!empty($sallary))
-            <p>Your sallary amound is: {{$sallary}}</p>
+            <p>Your sallary amound is: <span style="color:red; font-weight:bold; text-decoration:underline;">{{$sallary}}</span></p>
         @endif
         <form method="POST" action="">
             @csrf

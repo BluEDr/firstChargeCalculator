@@ -16,15 +16,11 @@ body {
 .custom-div {
     flex: 100%;
     width: 100%;
-    border: dotted;
-    border-color: black;
 }
 .custom-div2 {
     flex: 100%;
     width: 100%;
     margin-top: 15px;
-    border: dotted;
-    border-color: red;
 }
 
 .custom-div-form {
@@ -32,8 +28,6 @@ body {
     margin-top: 15px;
     margin-left: 20px;
     padding: 20px;
-    border: dotted;
-    border-color: red;
 }
 .contact-blade-div,
 .about-me-info {
@@ -59,15 +53,11 @@ body {
         margin-top: 15px;
         margin-left: 20px;
         padding: 20px;
-        border: dotted;
-        border-color: yellow;
     }
     .custom-div {
         flex: 100%;
         width: 100%;
         padding: 20px;
-        border: dotted;
-        border-color: red;
     }
     .custom-div-form {
         display: flex;
@@ -76,8 +66,6 @@ body {
         margin-top: 15px;
         margin-left: 20px;
         padding: 20px;
-        border: dotted;
-        border-color: red;
     }
 
     .custom-div2 {
@@ -108,8 +96,6 @@ body {
         margin-top: 15px;
         margin-left: 20px;
         padding: 20px;
-        border: dotted;
-        border-color: yellow;
     }
 
     .custom-div2 {
@@ -119,19 +105,16 @@ body {
         margin-top: 15px;
         margin-left: 20px;
         padding: 20px;
-        border: dotted;
-        border-color: red;
     }
 }
 
 .custom-div-30 {
     flex: 1;
-    border: dotted red;
+    margin-bottom: 15px;
     align-self: auto;
 }
 .custom-div-70 {
     flex: 3;
-    border: dotted red;
 }
 
 tr,

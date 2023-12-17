@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Logistica - Shipping Company Website Template</title>
+        <title>Expense Manager - Take Control of Your Spending</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -67,7 +67,7 @@
                 href="/"
                 class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5"
             >
-                <h2 class="mb-2 text-white">Charge Calculator</h2>
+                <h2 class="mb-2 text-white">Expense Manager</h2>
             </a>
             <button
                 type="button"
