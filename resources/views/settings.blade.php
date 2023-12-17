@@ -20,8 +20,8 @@
             <div class="form-group">
                 <label for="sallary">Write your sallary here.</label>
                 <input type="text" class="form-control" name="sallary" id="sallary" placeholder="Your sallary here!">
+                <input type="submit" value="Submit" class="btn btn-primary" style="margin-top: 10px">
             </div>
-            <input type="submit" value="Submit" class="btn btn-primary">
         </form>
     </div>
 </div>
