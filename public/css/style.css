@@ -1,3 +1,7 @@
+body {
+    width: 100%;
+    padding: 0;
+}
 /********** Template CSS **********/
 :root {
     --primary: #ff3e41;
@@ -9,31 +13,114 @@
 .fw-medium {
     font-weight: 600 !important;
 }
-
 .custom-div {
-    flex: 25%;
-    width: 25%;
-    margin-top: 15px;
-    margin-left: 20px;
-    padding: 20px;
+    flex: 100%;
+    width: 100%;
     border: dotted;
-    border-color: red;
+    border-color: black;
 }
 .custom-div2 {
-    display: flex;
-    flex: 75%;
+    flex: 100%;
+    width: 100%;
+    margin-top: 15px;
+    border: dotted;
+    border-color: red;
+}
+
+.custom-div-form {
+    flex: 100%;
     margin-top: 15px;
     margin-left: 20px;
     padding: 20px;
     border: dotted;
     border-color: red;
 }
+@media (max-width: 992px) {
+    .divbd {
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-check {
+        align-items: center;
+    }
+    .custom-div-form {
+        flex: 100%;
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 20px;
+        padding: 20px;
+        border: dotted;
+        border-color: yellow;
+    }
+    .custom-div {
+        flex: 100%;
+        width: 100%;
+        padding: 20px;
+        border: dotted;
+        border-color: red;
+    }
+    .custom-div-form {
+        display: flex;
+        flex: 100%;
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 20px;
+        padding: 20px;
+        border: dotted;
+        border-color: red;
+    }
+
+    .custom-div2 {
+        display: flex;
+        flex-direction: column;
+    }
+    .custom-div-70 {
+        order: 2;
+    }
+    .custom-div-30 {
+        order: 1;
+    }
+}
+
+@media (min-width: 992px) {
+    .custom-div-form {
+        flex: 1;
+    }
+    .custom-div2 {
+        display: flex;
+        flex: 4;
+    }
+}
+@media (min-width: 1200px) {
+    .custom-div-form {
+        flex: 25%;
+        width: 25%;
+        margin-top: 15px;
+        margin-left: 20px;
+        padding: 20px;
+        border: dotted;
+        border-color: yellow;
+    }
+
+    .custom-div2 {
+        display: flex;
+        flex: 100%;
+        width: 100%;
+        margin-top: 15px;
+        margin-left: 20px;
+        padding: 20px;
+        border: dotted;
+        border-color: red;
+    }
+}
+
 .custom-div-30 {
-    flex: 40%;
+    flex: 1;
     border: dotted red;
+    align-self: auto;
 }
 .custom-div-70 {
-    flex: 70%;
+    flex: 3;
     border: dotted red;
 }
 

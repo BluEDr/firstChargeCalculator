@@ -20,7 +20,8 @@
         {{ $errorCheck }} 
     </div>
 @endif
-<div style="display: flex; border:dashed green; margin:5px">
+<div style="border:dashed green; margin:5px; display: flex" class="divbd">
+    <div class="custom-div-form">
 <div class="custom-div">
     <form method="POST" action="">
         @csrf
@@ -70,6 +71,7 @@
 
         <input type="submit" value="Submit" class="btn btn-primary">
     </form>
+</div>
 </div>
     <div class="custom-div2">
         <div class="custom-div-70">
