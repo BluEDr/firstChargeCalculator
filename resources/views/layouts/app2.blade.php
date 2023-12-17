@@ -79,16 +79,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="/" class="nav-item nav-link active"
+                    <a href="/" class="nav-item nav-link {{$activePage =='home' ? 'active' : ''}}"
                         >Home</a
                     >
-                    <a href="{{route('about')}}" class="nav-item nav-link">About</a>
+                    <a href="{{route('about')}}" class="nav-item nav-link {{$activePage =='about' ? 'active' : ''}}">About</a>
                     @Auth
-                        <a href="{{route('settings')}}" class="nav-item nav-link"
+                        <a href="{{route('settings')}}" class="nav-item nav-link {{$activePage =='settings' ? 'active' : ''}}"
                             >Settings</a
                         >
                     @endauth
-                    <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
+                    <a href="{{route('contact')}}" class="nav-item nav-link {{$activePage == 'contact' ? 'active' : ''}}">Contact</a>
                 </div>
                 
                 <ul class="navbar-nav ms-auto">

@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app2',['activePage' => 'settings']) 
 @section('content')
 <div style="display: flex; border:dashed green; margin:5px">
     <div class="custom-div">

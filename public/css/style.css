@@ -35,6 +35,16 @@ body {
     border: dotted;
     border-color: red;
 }
+.contact-blade-div,
+.about-me-info {
+    margin: 20px;
+}
+.about-me-info p {
+    margin: 20px;
+}
+.contact-blade-div strong {
+    margin-left: 20px;
+}
 @media (max-width: 992px) {
     .divbd {
         flex-direction: column;

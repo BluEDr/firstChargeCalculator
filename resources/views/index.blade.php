@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app2',['activePage' => 'home'])
 @section('content')
 
 {{-- @if (Auth::check())
