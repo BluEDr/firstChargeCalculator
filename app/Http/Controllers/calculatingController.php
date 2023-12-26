@@ -35,16 +35,21 @@ class calculatingController extends Controller
                     $payed_amound->category_id = $request->get('selected_option');
                 else
                     $payed_amound->category_id = -1;
-                $payed_amound->user_id = Auth::user()->id;     //todo an den eisai loged in crasharei
+                $payed_amound->user_id = Auth::user()->id;    
                 if(count($currency_options)>0) 
                     $payed_amound->currency_id = $request->get('dropdown_currency');
                 else
-                    $payed_amound->currency_id = -1;    
+                    $payed_amound->currency_id = -1;    //ok lets do
 
                 if ($request->has('defaultCheck11')) {
                     $payed_amound->is_negative = 1;
                 } else {
                     $payed_amound->is_negative = 0;
+                }
+                if($request->hasFile('photo')) {    //save here the name and the path from the invoice(if exists)
+                    $filename = time() . $request->file('photo')->getClientOriginalName();
+                    $path = $request->file('photo')->storeAs('public/uploaded_photos',$filename);
+                    $payed_amound->image = $path;
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');

@@ -28,8 +28,8 @@ Route::any('/about', function() {
     })->name('about');
 
 Route::any('/contact', function() { 
-    return view('contact');
-    })->name('contact');
+    return view('contact'); 
+    })->name('contact'); 
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';

@@ -9,7 +9,7 @@
 <div style="margin:5px; display: flex" class="divbd">
     <div class="custom-div-form">
 <div class="custom-div">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data"> 
         @csrf
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
@@ -36,6 +36,7 @@
             @endforeach
         @endif
 
+        <input type="file" name="photo">
 
         @if (count($currency_options) > 0)
             <div class="form-group col-md-4">
@@ -68,6 +69,7 @@
                     <th>Reason</th>
                     <th>Date</th>
                     <th>Category</th>
+                    <th>Invoice</th>
                     <th>Delete</th>
                 </tr>
                 @foreach($pAmound as $pA)
@@ -86,7 +88,13 @@
                         @endif
                         {{-- <td>{{$pA->user->name}}</td> --}}
                         <td>{{ optional($pA->category)->name }}</td> 
-                        {{-- <td><a href="{{route('delete.row',$pA->id)}}">del</a></td> --}}
+                        <td>
+                            @if($pA->image)
+                                {{$pA->image}}
+                            @else
+                                None
+                            @endif
+                        </td>
                         <td><a href="#" onclick='confirmAndDelete("{{route("delete.row",$pA->id)}}")'>del</a></td>
                     </tr>
                 @endforeach

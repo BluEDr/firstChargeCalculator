@@ -79,9 +79,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="/" class="nav-item nav-link {{$activePage =='home' ? 'active' : ''}}"
-                        >Home</a
-                    >
+                    <a href="/" class="nav-item nav-link {{$activePage =='home' ? 'active' : ''}}">Home</a>
                     <a href="{{route('about')}}" class="nav-item nav-link {{$activePage =='about' ? 'active' : ''}}">About</a>
                     @Auth
                         <a href="{{route('settings')}}" class="nav-item nav-link {{$activePage =='settings' ? 'active' : ''}}"
