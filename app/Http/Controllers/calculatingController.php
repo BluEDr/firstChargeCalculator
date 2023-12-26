@@ -56,9 +56,6 @@ class calculatingController extends Controller
                         ]);
                         
                         if ($validator->fails()) {
-                            // Handle validation failure
-                            // You can access the validation errors using $validator->errors()
-                            // For example:
                             $errors = $validator->errors();
                             foreach ($errors->all() as $error) {
                                 echo $error;
