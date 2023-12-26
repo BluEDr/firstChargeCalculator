@@ -10,6 +10,7 @@ use App\Models\payed_amound;
 use App\Models\category;
 use App\Models\currency;
 use App\Models\Sallary;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 class calculatingController extends Controller
 {
@@ -46,10 +47,30 @@ class calculatingController extends Controller
                 } else {
                     $payed_amound->is_negative = 0;
                 }
-                if($request->hasFile('photo')) {    //save here the name and the path from the invoice(if exists)
-                    $filename = time() . $request->file('photo')->getClientOriginalName();
-                    $path = $request->file('photo')->storeAs('public/uploaded_photos',$filename);
-                    $payed_amound->image = $path;
+                if($request->hasFile('photo')) {    //save here the name and the path from the invoice(if)
+                    if ($request->file('photo')->isValid()) {
+                        // Validation passed; it's a valid image
+
+                        $validator = Validator::make($request->all(), [
+                            'photo' => 'required|file|image|mimes:jpeg,png,jpg,gif',
+                        ]);
+                        
+                        if ($validator->fails()) {
+                            // Handle validation failure
+                            // You can access the validation errors using $validator->errors()
+                            // For example:
+                            $errors = $validator->errors();
+                            foreach ($errors->all() as $error) {
+                                echo $error;
+                            }
+                        } else {
+                            $filename = time() . $request->file('photo')->getClientOriginalName();
+                            $path = $request->file('photo')->storeAs('public/uploaded_photos',$filename);
+                            $payed_amound->image = $filename;
+                        }
+                    } else { 
+                        echo "wrong file type in the photo input field";
+                    }
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
