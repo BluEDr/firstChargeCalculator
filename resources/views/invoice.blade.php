@@ -1,6 +1,5 @@
 @extends('layouts.app2',['activePage'=>''])
 @section('content')
-
 <div class="invoice-div">
     <table>
         <tr>
@@ -24,7 +23,7 @@
         </tr>
     </table>
     <br>
-    <img src="{{ asset('storage/uploaded_photos/'.$invoice->image) }}" alt="Example Image">
+    <img src="{{ asset('storage/uploaded_photos/'.$invoice->image) }}" alt="Invoice Image">
     <br>
     <a href="{{route('index')}}">Return to home.</a>
 

@@ -11,6 +11,8 @@ use App\Models\category;
 use App\Models\currency;
 use App\Models\Sallary;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+
 use Auth;
 class calculatingController extends Controller
 {
@@ -211,7 +213,10 @@ class calculatingController extends Controller
     public function invoice(string $inv) {
         $userId = Auth::user()->id;
         $pa = payed_amound::where('id',$inv)->where('user_id',$userId)->first();
-        return view('invoice',['invoice' => $pa]);
+        if(!$pa)    //Protecting the the users to have access from others invoice.
+            return redirect()->route('index');
+        else    
+            return view('invoice',['invoice' => $pa]);
         // return view('invoice',['invoice' => $inv]);
     }
 }
