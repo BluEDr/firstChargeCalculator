@@ -90,7 +90,7 @@
                         <td>{{ optional($pA->category)->name }}</td> 
                         <td>
                             @if($pA->image)
-                                <a href="./storage/uploaded_photos/{{$pA->image}}">invoice</a>{{-- {{$pA->image}} --}}
+                                <a href="/invoice/{{$pA->id}}">invoice</a>{{-- <a href="./storage/uploaded_photos/{{$pA->image}}">invoice</a> --}}
                             @endif
                         </td>
                         <td><a href="#" onclick='confirmAndDelete("{{route("delete.row",$pA->id)}}")'>del</a></td>

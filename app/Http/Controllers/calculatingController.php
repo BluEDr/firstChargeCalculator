@@ -208,4 +208,10 @@ class calculatingController extends Controller
             return redirect()->route('index')->with($a, 'Please enter a valid real number.'); // Redirect back to the form with an error message
         }
     }
+    public function invoice(string $inv) {
+        $userId = Auth::user()->id;
+        $pa = payed_amound::where('id',$inv)->where('user_id',$userId)->first();
+        return view('invoice',['invoice' => $pa]);
+        // return view('invoice',['invoice' => $inv]);
+    }
 }
