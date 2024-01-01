@@ -19,11 +19,12 @@
         </div>
         <div class="form-group">
         <label for="price">Insert the price *</label>
-        <input type="text" class="form-control" name="price" id="price" placeholder="Default input">
+        {{-- <input type="text" class="form-control" name="pricec" id="price" pattern="[0-9.]*" inputmode="numeric" > --}}
+        <input type="text" class="form-control" name="price" id="price" placeholder="Insert here a numeric value.">
         </div>
         <div class="form-group">
             <label for="reason">Insert the reason (Not required)</label>
-            <input type="text" class="form-control" name="reason" id="reason" placeholder="Default input">
+            <input type="text" class="form-control" name="reason" id="reason" placeholder="Give me some information.">
         </div>
         
         @if (count($options) > 0)
@@ -35,7 +36,6 @@
                 </label><br>
             @endforeach
         @endif
-
         <input type="file" name="photo">
 
         @if (count($currency_options) > 0)
