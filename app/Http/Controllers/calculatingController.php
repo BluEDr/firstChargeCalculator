@@ -219,4 +219,20 @@ class calculatingController extends Controller
             return view('invoice',['invoice' => $pa]);
         // return view('invoice',['invoice' => $inv]);
     }
+
+    public function search(Request $req) {
+        $userId = Auth::user()->id;
+        $currency_options = currency::all();
+        $options = category::all();
+        $today = Carbon::now();
+        $todayDate = $today->toDateString();
+        if ($req->get('search') == null) {
+            $a = 'errorCheck';
+            return redirect()->route('index')->with($a,'No search data.'); //FIXME: den emfanizei to error
+        } else {
+            $search = $req->get('search');
+            $pAmound = payed_amound::where('reason', 'LIKE' , '%' . $search . '%')->where('user_id',$userId)->orderBy('updated_at','desc')->get();
+            return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('currency_options'))->with(compact('todayDate'));
+        }
+    }
 }

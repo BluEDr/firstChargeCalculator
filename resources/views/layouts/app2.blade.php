@@ -89,7 +89,15 @@
                     <a href="{{route('contact')}}" class="nav-item nav-link {{$activePage == 'contact' ? 'active' : ''}}">Contact</a>
                 </div>
                 
+
                 <ul class="navbar-nav ms-auto">
+                    
+                    @Auth
+                        <form class="nav-item nav-link" action="{{route('search')}}">
+                            <input class="nav-item" type="text" placeholder="Search.." name="search">
+                            <button class="nav-item" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    @endauth
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))

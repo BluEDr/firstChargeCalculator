@@ -23,6 +23,7 @@ Route::post('/submit-form', [calculatingController::class ,'processForm'])->name
 
 Route::any('/settings', [settingController::class, 'index'])->name('settings')->middleware('auth');
 Route::get('/delete-row/{priceValue}', [calculatingController::class, 'deleteRow'])->name('delete.row')->middleware('auth');
+Route::get('/search', [calculatingController::class, 'search'])->name('search')->middleware('auth');
 Route::get('/invoice/{inv}', [calculatingController::class, 'invoice'])->name('invoice')->middleware('auth');
 Route::any('/about', function() { 
     return view('about');
