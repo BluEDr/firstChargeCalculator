@@ -1,9 +1,9 @@
 @extends('layouts.app2',['activePage' => 'home'])
 @section('content')
 
-@if(!empty($errorCheck))
+@if(session('errorCheck'))
     <div class="alert alert-danger">
-        {{ $errorCheck }} 
+        {{ session('errorCheck') }} 
     </div>
 @endif
 <div style="margin:5px; display: flex" class="divbd">
@@ -98,7 +98,7 @@
                 @endforeach
             </table>
         @else
-            <p>There is no data added. Buy and save here your spended money data ;) </p>
+            <p>There is no data. </p>
         @endif
         </div>
         <div class="custom-div-30">
