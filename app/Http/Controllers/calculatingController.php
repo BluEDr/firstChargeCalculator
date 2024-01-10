@@ -12,11 +12,16 @@ use App\Models\currency;
 use App\Models\Sallary;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\App;
 
 use Auth;
 class calculatingController extends Controller
 {
-    public function showIndex(Request $request) {
+    public function showIndex(Request $request,$lang = null) {
+        $language = $lang;
+        if($lang==null)
+            $language = config('app.local');
+        App::setLocale($language); //kathorismos epilogis glossas
         $username = Auth::user()->name;
         $userid = Auth::user()->id;
         // echo $request->method();
@@ -228,11 +233,15 @@ class calculatingController extends Controller
         $todayDate = $today->toDateString();
         if ($req->get('search') == null) {
             $a = 'errorCheck';
-            return redirect()->route('index')->with($a,'No search data.'); //FIXME: den emfanizei to error
+            return redirect()->route('index')->with($a,'No search data.'); 
         } else {
             $search = $req->get('search');
             $pAmound = payed_amound::where('reason', 'LIKE' , '%' . $search . '%')->where('user_id',$userId)->orderBy('updated_at','desc')->get();
-            return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('currency_options'))->with(compact('todayDate'));
+            if($pAmound->isEmpty()) {
+                $a = 'errorCheck';
+                return redirect()->route('index')->with($a,'There is not imported data with reason '. $search . '.');
+            } else
+                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('currency_options'))->with(compact('todayDate'));
         }
     }
 }

@@ -18,7 +18,7 @@ use App\Http\Controllers\settingController;
 |
 */
 
-Route::any('/', [calculatingController::class,'showIndex'])->name('index')->middleware('auth');
+Route::any('/{lang?}', [calculatingController::class,'showIndex'])->name('index')->middleware('auth');
 Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
 
 Route::any('/settings', [settingController::class, 'index'])->name('settings')->middleware('auth');
@@ -35,7 +35,7 @@ Route::any('/contact', function() {
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';
-});
+})->name('hello');
 
 Route::get('/hello', function() {
     return view('helloSketo',['hello' => 'sketo']);

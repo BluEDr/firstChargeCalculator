@@ -14,21 +14,21 @@
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
             <label class="form-check-label" for="defaultCheck1">
-                Add Money
+                {{__('messages.add_money')}}
             </label>
         </div>
         <div class="form-group">
-        <label for="price">Insert the price *</label>
+        <label for="price">{{__('messages.insert_price')}} *</label>
         {{-- <input type="text" class="form-control" name="pricec" id="price" pattern="[0-9.]*" inputmode="numeric" > --}}
-        <input type="text" class="form-control" name="price" id="price" placeholder="Insert here a numeric value.">
+        <input type="text" class="form-control" name="price" id="price" placeholder="{{__('messages.insert_numeric_number')}}">
         </div>
         <div class="form-group">
-            <label for="reason">Insert the reason (Not required)</label>
-            <input type="text" class="form-control" name="reason" id="reason" placeholder="Give me some information.">
+            <label for="reason">{{__('messages.insert_the_reason')}}</label>
+            <input type="text" class="form-control" name="reason" id="reason" placeholder="{{__('messages.give_me_some_info')}}">
         </div>
         
         @if (count($options) > 0)
-            <div class="form-group">Category:</div>
+            <div class="form-group">{{__('messages.category')}}:</div>
             @foreach ($options as $option)
                 <label>
                     <input class="form-check-input" type="radio" name="selected_option" value="{{ $option->id }}" {{ $loop->first ? 'checked' : '' }} >
@@ -40,7 +40,7 @@
 
         @if (count($currency_options) > 0)
             <div class="form-group col-md-4">
-                <label for="inputState">Currency</label>
+                <label for="inputState">{{__('messages.currency')}}</label>
                 <select id="inputState" name='dropdown_currency' class="form-control">
 
                 
@@ -56,7 +56,7 @@
             </div>
         @endif
 
-        <input type="submit" value="Submit" class="btn btn-primary">
+        <input type="submit" value="{{__('messages.submit_btn')}}" class="btn btn-primary">
     </form>
 </div>
 </div>
@@ -65,12 +65,12 @@
         @if (count($pAmound)>0)
             <table>
                 <tr>
-                    <th>Price</th>
-                    <th>Reason</th>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Invoice</th>
-                    <th>Delete</th>
+                    <th>{{__('messages.price')}}</th>
+                    <th>{{__('messages.reason')}}</th>
+                    <th>{{__('messages.date')}}</th>
+                    <th>{{__('messages.category')}}</th>
+                    <th>{{__('messages.invoice')}}</th>
+                    <th>{{__('messages.delete')}}</th>
                 </tr>
                 @foreach($pAmound as $pA)
                     {{-- @if($pA->created_at==) --}}

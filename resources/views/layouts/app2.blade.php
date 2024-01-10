@@ -90,6 +90,7 @@
                 </div>
                 
 
+                    
                 <ul class="navbar-nav ms-auto">
                     
                     @Auth
@@ -98,6 +99,26 @@
                             <button class="nav-item" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     @endauth
+
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Lang
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('index','en') }}">
+                                English
+                            </a>
+                            <a class="dropdown-item" href="{{ route('index','el') }}">
+                                Ελληνικά
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
