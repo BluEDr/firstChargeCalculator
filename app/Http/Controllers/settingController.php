@@ -19,7 +19,7 @@ class settingController extends Controller
 
         $l = user::find($userid);
         $reqLang = $request->input('lang');
-        $l->update(['language' => $reqLang,]); //FIXME: den kanei update tin glossa ston pinaka users
+        $l->update(['language' => $reqLang,]);
         $request->validate(['sallary' => 'numeric'],['sallary.numeric' => 'The entered value must be a number!']);
         if ($request->sallary) {
             $ssal = new Sallary();
