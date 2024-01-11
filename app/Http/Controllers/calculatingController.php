@@ -161,7 +161,8 @@ class calculatingController extends Controller
         return $sum;
     }
 
-    public function index(Request $request) {
+    public function index(Request $request,$locale = null) {
+        App::setLocale($locale);
         $a1 = 1;
         $a2 = 2;
         $pAmound = payed_amound::all();

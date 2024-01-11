@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Auth;
 use App\Models\Sallary;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -16,6 +17,9 @@ class settingController extends Controller
         // $sal = sallary::where('user_id',$userid)->first(); 
         $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
 
+        $l = user::find($userid);
+        $reqLang = $request->input('lang');
+        $l->update(['language' => $reqLang,]); //FIXME: den kanei update tin glossa ston pinaka users
         $request->validate(['sallary' => 'numeric'],['sallary.numeric' => 'The entered value must be a number!']);
         if ($request->sallary) {
             $ssal = new Sallary();

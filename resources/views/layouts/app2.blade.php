@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Expense Manager - Take Control of Your Spending</title>
+        <title>{{__('messages.title')}}</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -67,7 +67,7 @@
                 href="/"
                 class="navbar-brand bg-primary d-flex align-items-center px-4 px-lg-5"
             >
-                <h2 class="mb-2 text-white">Expense Manager</h2>
+                <h2 class="mb-2 text-white">{{__('messages.expense_manager')}}</h2>
             </a>
             <button
                 type="button"
@@ -79,14 +79,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="/" class="nav-item nav-link {{$activePage =='home' ? 'active' : ''}}">Home</a>
-                    <a href="{{route('about')}}" class="nav-item nav-link {{$activePage =='about' ? 'active' : ''}}">About</a>
+                    <a href="/" class="nav-item nav-link {{$activePage =='home' ? 'active' : ''}}">{{__('messages.home')}}</a>
+                    <a href="{{route('about')}}" class="nav-item nav-link {{$activePage =='about' ? 'active' : ''}}">{{__('messages.about')}}</a>
                     @Auth
                         <a href="{{route('settings')}}" class="nav-item nav-link {{$activePage =='settings' ? 'active' : ''}}"
-                            >Settings</a
+                            >{{__('messages.settings')}}</a
                         >
                     @endauth
-                    <a href="{{route('contact')}}" class="nav-item nav-link {{$activePage == 'contact' ? 'active' : ''}}">Contact</a>
+                    <a href="{{route('contact')}}" class="nav-item nav-link {{$activePage == 'contact' ? 'active' : ''}}">{{__('messages.contact')}}</a>
                 </div>
                 
 
@@ -100,24 +100,6 @@
                         </form>
                     @endauth
 
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Lang
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('index','en') }}">
-                                English
-                            </a>
-                            <a class="dropdown-item" href="{{ route('index','el') }}">
-                                Ελληνικά
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
 
                     <!-- Authentication Links -->
                     @guest

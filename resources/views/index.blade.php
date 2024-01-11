@@ -104,16 +104,16 @@
         <div class="custom-div-30">
             <table>
             @if(!empty($pMonthsSum))
-                <tr><td>Total spend from this month:</td><td> {{$pMonthsSum}}</td></tr>
+                <tr><td>{{__('messages.total_spend')}}</td><td> {{$pMonthsSum}}</td></tr>
             @endif
             @if(!empty($perDay))
-                <tr><td>You can spend each single day</td><td> {{$perDay}}</td></tr>
+                <tr><td>{{__('messages.how_much_can_spend_each_day')}}</td><td> {{$perDay}}</td></tr>
             @endif
             @if(!empty($spentToday))
-                <tr><td>Today, you spent:</td><td> {{$spentToday}}</td></tr>
+                <tr><td>{{__('messages.today_spent')}}</td><td> {{$spentToday}}</td></tr>
             @endif
             @if(!empty($summWhileNow) && (count($pAmound) > 0) && (!empty($perDay)))
-                <tr><td>Status Now:</td><td style="background-color: black ; color: red; text-decoration-line: underline; font-weight:bold"> {{$summWhileNow}}</td></tr>
+                <tr><td>{{__('messages.status_now')}}</td><td style="background-color: black ; color: red; text-decoration-line: underline; font-weight:bold"> {{$summWhileNow}}</td></tr>
             @endif
             </table>
             

@@ -1,6 +1,8 @@
 <?php 
 
 return [
+    'title' => 'Expense Manager - Take Control of Your Spending',
+    'expense_manager' => 'Expense Manager',
     'add_money' => 'Add Money',
     'insert_price' => 'Insert the price',
     'insert_numeric_number' => 'Insert here a numeric value.',
@@ -15,4 +17,12 @@ return [
     'category' => 'Category',
     'invoice' => 'Invoice',
     'delete' => 'Delete',
+    'total_spend' => 'Total spend from this month:',
+    'how_much_can_spend_each_day' => 'You can spend each single day:',
+    'today_spent' => 'Today, you spent:',
+    'status_now' => 'Status Now:',
+    'home' => 'Home',
+    'about' => 'About',
+    'settings' => 'Settings',
+    'contact' => 'Contact',
 ];
