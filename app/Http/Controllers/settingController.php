@@ -17,9 +17,12 @@ class settingController extends Controller
         // $sal = sallary::where('user_id',$userid)->first(); 
         $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
 
-        $l = user::find($userid);
+
         $reqLang = $request->input('lang');
-        $l->update(['language' => $reqLang,]);
+        if($reqLang) {
+            $l = user::find($userid);
+            $l->update(['language' => $reqLang,]);
+        }
         $request->validate(['sallary' => 'numeric'],['sallary.numeric' => 'The entered value must be a number!']);
         if ($request->sallary) {
             $ssal = new Sallary();

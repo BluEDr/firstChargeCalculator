@@ -19,8 +19,11 @@ class Language
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()) {
-            if (Auth()->user()->language != NULL)
+            if (Auth()->user()->language != NULL) 
                 $locale = Auth()->user()->language; //edo me to middleware bazo tin glossa poy einai proepilegmeni ap ton xristi
+            else {
+                $locale = config('app.locale');
+            }
         } else {
             $locale = config('app.locale'); //an den einai syndemenos mpainei i default timi
         }

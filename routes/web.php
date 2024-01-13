@@ -29,11 +29,11 @@ Route::get('/search', [calculatingController::class, 'search'])->name('search')-
 Route::get('/invoice/{inv}', [calculatingController::class, 'invoice'])->name('invoice')->middleware('auth');
 Route::any('/about', function() { 
     return view('about');
-    })->name('about')->middleware('language');
+    })->name('about')->middleware('language'); //FIXME: otan kataxorite stin basi to language kai allazo selida to kanei null gia kapoion logo
 
 Route::any('/contact', function() { 
     return view('contact'); 
-    })->name('contact'); 
+    })->name('contact')->middleware('language'); 
 
 Route::get('/hello/{id}', function($id) {
     return '<h1>Hello ' . $id . ' </h1>';

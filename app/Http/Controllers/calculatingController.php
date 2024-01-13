@@ -17,11 +17,7 @@ use Illuminate\Support\Facades\App;
 use Auth;
 class calculatingController extends Controller
 {
-    public function showIndex(Request $request,$lang = null) {
-        $language = $lang;
-        if($lang==null)
-            $language = config('app.local');
-        App::setLocale($language); //kathorismos epilogis glossas
+    public function showIndex(Request $request) {
         $username = Auth::user()->name;
         $userid = Auth::user()->id;
         // echo $request->method();
@@ -162,7 +158,6 @@ class calculatingController extends Controller
     }
 
     public function index(Request $request,$locale = null) {
-        App::setLocale($locale);
         $a1 = 1;
         $a2 = 2;
         $pAmound = payed_amound::all();
