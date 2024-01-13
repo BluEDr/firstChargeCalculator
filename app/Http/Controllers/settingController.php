@@ -6,6 +6,7 @@ use App\Models\Sallary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
+use App;
 
 class settingController extends Controller
 {
@@ -22,9 +23,10 @@ class settingController extends Controller
         if($reqLang) {
             $l = user::find($userid);
             $l->update(['language' => $reqLang,]);
+            App::setlocale($reqLang); //gia na ananaiosei aytomata tin glossa giati xoris ayto tha fanei sto epomeno refresh poy tha treksei kai to middleware
         }
-        $request->validate(['sallary' => 'numeric'],['sallary.numeric' => 'The entered value must be a number!']);
         if ($request->sallary) {
+            $request->validate(['sallary' => 'numeric'],['sallary.numeric' => 'The entered value must be a number!']);
             $ssal = new Sallary();
             $ssal->sallary = $request->sallary;
             $ssal->user_id = $userid;
