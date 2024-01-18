@@ -40,8 +40,8 @@
 
         @if (count($currency_options) > 0)
             <div class="form-group col-md-4">
-                <label for="inputState">{{__('messages.currency')}}</label>
-                <select id="inputState" name='dropdown_currency' class="form-control">
+                <label for="inputState" style="display: none;">{{__('messages.currency')}}</label>
+                <select id="inputState" name='dropdown_currency' class="form-control" style="display: none;">
 
                 
                 @foreach ($currency_options as $option)
@@ -55,13 +55,53 @@
                 </select>
             </div>
         @endif
-
-        <input type="submit" value="{{__('messages.submit_btn')}}" class="btn btn-primary">
+        <input type="submit" style="margin-top: 5px" value="{{__('messages.submit_btn')}}" class="btn btn-primary">
     </form>
 </div>
 </div>
     <div class="custom-div2">
         <div class="custom-div-70">
+            <div style=" align-items: center; margin-right: 20px;" class="divbd">
+                <form method="GET" action="{{route('special.search')}}"> 
+                    <label for="specialSearch">Special Search:</label>
+                    <hr>
+                    <select id="dayDropdown" name="day" class="form-control">
+                        <?php
+                            $days = array_merge(range(1, 31), ['Days']);
+                            foreach ($days as $day) {
+                                $selected = ($day === 'Days') ? 'selected' : '';
+                                echo "<option value='$day' $selected>$day</option>";
+                            }
+                        ?>
+                    </select>
+            
+                    <select id="monthDropdown" name="month" class="form-control">
+                        <?php
+                            $months = array_merge(
+                                ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                                ['Months']
+                            );
+                            foreach ($months as $month) {
+                                $selected = ($month === 'Months') ? 'selected' : '';
+                                echo "<option value='$month' $selected>$month</option>";
+                            }
+                        ?>
+                    </select>
+            
+                    <select id="yearDropdown" name="year" class="form-control">
+                        <option value="Years" selected>Years</option>
+                        @if (isset($yearsInDb))
+                            @if (count($yearsInDb) > 0)
+                                @foreach ($yearsInDb as $year)
+                                    <option value="{{$year}}">{{$year}}</option>
+                                @endforeach   
+                            @endif
+                        @endif
+                    </select>
+            
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         @if (count($pAmound)>0)
             <table>
                 <tr>

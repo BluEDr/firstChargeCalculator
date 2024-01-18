@@ -22,9 +22,11 @@ class calculatingController extends Controller
         $userid = Auth::user()->id;
         // echo $request->method();
         $options = category::all();
-        $today = Carbon::now();
+        // $today = Carbon::now();
+        $today = Carbon::create(2001,5,4,12,34,56); //todo: delete this just for testing
         $todayDate = $today->toDateString();
         $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get(); //->orderBy('price','desc')
+        $yearsInDb = $this->getYearsFromCreatedAt($pAmound); //with this i receive the years that added in the database from the loged in user.
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             $number = $request->input('price');
@@ -50,6 +52,8 @@ class calculatingController extends Controller
                 } else {
                     $payed_amound->is_negative = 0;
                 }
+                $payed_amound->created_at = $today; //TODO: delete this just for testing
+                $payed_amound->updated_at = $today; //todo: delete this just for testing
                 if($request->hasFile('photo')) {    //save here the name and the path from the invoice(if)
                     if ($request->file('photo')->isValid()) {
                         // Validation passed; it's a valid image
@@ -80,14 +84,14 @@ class calculatingController extends Controller
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
                 $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
                 $spentToday = $this->todaySum($pAmound,$todayDate);
-                return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));
+                return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'))->with('yearsInDb',$yearsInDb);
             } else {
                 $a = 'errorCheck';
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
                 $spentToday = $this->todaySum($pAmound,$todayDate);
-                return view('index')->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));          
+                return view('index')->with('pMonthsSum',$monthsPriceSum)->with('errorCheck','This is not a correct price value.')->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'))->with('yearsInDb',$yearsInDb);          
             }
             
         } else {
@@ -95,8 +99,23 @@ class calculatingController extends Controller
             $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
             $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
             $spentToday = $this->todaySum($pAmound,$todayDate);
-            return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'));
+            return view('index')->with('pMonthsSum',$monthsPriceSum)->with(compact('options'))->with(compact('currency_options'))->with(compact('pAmound'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with(compact('perDay'))->with(compact('spentToday'))->with('yearsInDb',$yearsInDb);
         }
+    }
+
+    private function getYearsFromCreatedAt($pAmound) {
+        // Assuming $pAmound is a collection or an array of database results
+
+        $years = [];
+
+        foreach ($pAmound as $record) {
+            $year = $record->created_at->year;
+            if (!in_array($year, $years)) {
+                $years[] = $year;
+            }
+        }
+        sort($years);
+        return $years;
     }
 
     private function calulateSummaryWhileNow(float $monthsPriceSum,int $userid) {
@@ -133,9 +152,11 @@ class calculatingController extends Controller
     private function monthsSum(Collection $pAmound) {
         $sum = 0;
         $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
         foreach ($pAmound as $p) {
             $createdMonth = Carbon::parse($p->created_at)->month; 
-            if ($createdMonth == $currentMonth) {
+            $createdYear = Carbon::parse($p->created_at)->year; //xriazomaste kai to etos giati allios tha ypologizei taytoxrona ton ekastote mina kathe etous poy exei ginei kataxorisi
+            if (($createdMonth == $currentMonth) && ($createdYear == $currentYear)) {
                 if ($p->is_negative)
                     $sum -= $p->price;
                 else
@@ -166,19 +187,6 @@ class calculatingController extends Controller
             $a2 = $request->get('reason');
         }
         return view('index', ['l'=>$request->method(), 'a' => $a1, 'b'=> $a2, compact('pAmound')]); 
-    }
-
-    public function insertValue(Request $request){
-        if ($request->method()=='POST') {
-            $post = new Post();
-            $post->title = $request->get('value');
-            $post->content = $request->get('value');
-            $post->user_id = 0; 
-            $post->save();
-            $postSelects = Post::where('content', 'like', '%' . '88' . '%')->get();
-            return view('insertValue', ['l'=> $request->method(), 't'=>5122, 'db' => $postSelects]);
-        }
-        return view('insertValue', ['l' => $request->method(), 't'=>5122, 'db' => null]);
     }
 
     public function deleteRow($deletedId) {
@@ -227,9 +235,16 @@ class calculatingController extends Controller
         $options = category::all();
         $today = Carbon::now();
         $todayDate = $today->toDateString();
-        if ($req->get('search') == null) {
-            $a = 'errorCheck';
-            return redirect()->route('index')->with($a,'No search data.'); 
+        if ($req->get('search') == null) { 
+            // if ((($req->get('day') == 'Days') || ($req->get('month') == 'Months')) || ($req->get('year') == 'Years')) { 
+            if(false) { //todo: na ftiakso ayto gia na mporei na kanei search me basi tin imerominia
+                $a = 'errorCheck';
+                return redirect()->route('index')->with($a,'No search data.'); 
+            } else {
+                $year = intval($req->get('year'));
+                $pAmound = payed_amound::whereYear('created_at',$year)->get();
+                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('currency_options'))->with(compact('todayDate'));
+            }
         } else {
             $search = $req->get('search');
             $pAmound = payed_amound::where('reason', 'LIKE' , '%' . $search . '%')->where('user_id',$userId)->orderBy('updated_at','desc')->get();

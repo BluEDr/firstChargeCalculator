@@ -27,6 +27,7 @@ Route::any('/settings', [settingController::class, 'index'])->name('settings')->
 Route::get('/delete-row/{priceValue}', [calculatingController::class, 'deleteRow'])->name('delete.row')->middleware('auth');
 Route::get('/search', [calculatingController::class, 'search'])->name('search')->middleware('auth');
 Route::get('/invoice/{inv}', [calculatingController::class, 'invoice'])->name('invoice')->middleware('auth');
+Route::get('/specialSearch', [calculatingController::class, 'search'])->name('special.search')->middleware('auth');
 Route::any('/about', function() { 
     return view('about');
     })->name('about')->middleware('language'); //FIXME: otan kataxorite stin basi to language kai allazo selida to kanei null gia kapoion logo
@@ -60,4 +61,4 @@ Route::any('/delete-post/{post}', [calculatingController::class, 'postDelete'])-
 Route::get('/home2', function() {return view('home2');})->name('home2');
 
 
-Route::any('/{lang?}', [calculatingController::class, 'showIndex'])->name('index')->middleware(['auth','language']); //mpainei anagkastika teleytaio giati otan trexo gia paradigma to /settings to pernei oti to lang einai to settings kai trexei ayto anti gia to route settings. Opote paizei rolo i seira
+Route::any('/', [calculatingController::class, 'showIndex'])->name('index')->middleware(['auth','language']); //mpainei anagkastika teleytaio giati otan trexo gia paradigma to /settings to pernei oti to lang einai to settings kai trexei ayto anti gia to route settings. Opote paizei rolo i seira
