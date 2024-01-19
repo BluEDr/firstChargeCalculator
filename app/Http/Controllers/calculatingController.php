@@ -22,8 +22,8 @@ class calculatingController extends Controller
         $userid = Auth::user()->id;
         // echo $request->method();
         $options = category::all();
-        // $today = Carbon::now();
-        $today = Carbon::create(2001,5,4,12,34,56); //todo: delete this just for testing
+        $today = Carbon::now();
+        // $today = Carbon::create(2001,5,4,12,34,56); //todo: delete this just for testing
         $todayDate = $today->toDateString();
         $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get(); //->orderBy('price','desc')
         $yearsInDb = $this->getYearsFromCreatedAt($pAmound); //with this i receive the years that added in the database from the loged in user.
@@ -78,7 +78,7 @@ class calculatingController extends Controller
                 }
                 $payed_amound->save();
                 $a = $request->input('defaultCheck11');
-                $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->get();
+                $pAmound = payed_amound::with('user','category')->where('user_id',$userid)->orderBy('updated_at','desc')->take(40)->get();
                 $monthsPriceSum = $this->monthsSum($pAmound);
                 // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
                 $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
@@ -149,10 +149,10 @@ class calculatingController extends Controller
         return $sum;
     }
 
-    private function monthsSum(Collection $pAmound) {
+    private function monthsSum(Collection $pAmound, $currentMonth = null, $currentYear = null) {
         $sum = 0;
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
+        $currentMonth = $currentMonth ?? Carbon::now()->month;
+        $currentYear = $currentYear ?? Carbon::now()->year;
         foreach ($pAmound as $p) {
             $createdMonth = Carbon::parse($p->created_at)->month; 
             $createdYear = Carbon::parse($p->created_at)->year; //xriazomaste kai to etos giati allios tha ypologizei taytoxrona ton ekastote mina kathe etous poy exei ginei kataxorisi
@@ -235,15 +235,36 @@ class calculatingController extends Controller
         $options = category::all();
         $today = Carbon::now();
         $todayDate = $today->toDateString();
+        $pAmound = payed_amound::with('user')->where('user_id',$userId)->get(); //->orderBy('price','desc')
+        $yearsInDb = $this->getYearsFromCreatedAt($pAmound);
         if ($req->get('search') == null) { 
-            // if ((($req->get('day') == 'Days') || ($req->get('month') == 'Months')) || ($req->get('year') == 'Years')) { 
-            if(false) { //todo: na ftiakso ayto gia na mporei na kanei search me basi tin imerominia
+            if (($req->get('day') == 'Days') && ($req->get('month') == 'Months') && ($req->get('year') == 'Years')) { 
                 $a = 'errorCheck';
                 return redirect()->route('index')->with($a,'No search data.'); 
             } else {
                 $year = intval($req->get('year'));
-                $pAmound = payed_amound::whereYear('created_at',$year)->get();
-                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('currency_options'))->with(compact('todayDate'));
+                $month = intval($req->get('month'));
+                $day = intval($req->get('day'));
+                $query = payed_amound::query();
+                if ($req->get('year')!='Years')
+                    $query->whereYear('created_at',$year);
+                if($req->get('month')!='Months')
+                    $query->whereMonth('created_at',$month);
+                if($req->get('day')!='Days')
+                    $query->whereDay('created_at',$day);
+                $pAmound = $query->orderBy('created_at','desc')->get();
+                $spentToday = null;
+                $pMonthsSum = null;
+                if ($req->get('month')!='Months' && $req->get('year') != 'Years' && $req->get('day') != 'Days') {
+                    // $perDay = $this->howMuchPerDay($monthsPriceSum,$userid);
+                    // $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userid);
+                    $today = Carbon::create($year,$month,$day); //todo: delete this just for testing
+                    $todayDate = $today->toDateString();
+                    $spentToday = $this->todaySum($pAmound,$todayDate);
+                } elseif ($req->get('month')!='Months' && $req->get('year') != 'Years') {
+                    $pMonthsSum = $this->monthsSum($pAmound,$month,$year);
+                } 
+                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('spentToday'))->with(compact('pMonthsSum'))->with(compact('currency_options'))->with(compact('todayDate'))->with('yearsInDb',$yearsInDb);
             }
         } else {
             $search = $req->get('search');

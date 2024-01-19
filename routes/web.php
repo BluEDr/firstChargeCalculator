@@ -20,14 +20,15 @@ use App\Http\Controllers\settingController;
 
 Auth::routes();
 
+Route::any('/', [calculatingController::class, 'showIndex'])->name('index')->middleware(['auth','language']); 
 // Route::any('/{lang?}', [calculatingController::class,'showIndex'])->name('index')->middleware('auth');
 Route::post('/submit-form', [calculatingController::class ,'processForm'])->name('processForm');
 
 Route::any('/settings', [settingController::class, 'index'])->name('settings')->middleware(['auth','language']);
 Route::get('/delete-row/{priceValue}', [calculatingController::class, 'deleteRow'])->name('delete.row')->middleware('auth');
-Route::get('/search', [calculatingController::class, 'search'])->name('search')->middleware('auth');
+Route::get('/search', [calculatingController::class, 'search'])->name('search')->middleware(['auth','language']);
 Route::get('/invoice/{inv}', [calculatingController::class, 'invoice'])->name('invoice')->middleware('auth');
-Route::get('/specialSearch', [calculatingController::class, 'search'])->name('special.search')->middleware('auth');
+Route::get('/specialSearch', [calculatingController::class, 'search'])->name('special.search')->middleware(['auth','language']);
 Route::any('/about', function() { 
     return view('about');
     })->name('about')->middleware('language'); //FIXME: otan kataxorite stin basi to language kai allazo selida to kanei null gia kapoion logo
@@ -36,19 +37,6 @@ Route::any('/contact', function() {
     return view('contact'); 
     })->name('contact')->middleware('language'); 
 
-Route::get('/hello/{id}', function($id) {
-    return '<h1>Hello ' . $id . ' </h1>';
-})->name('hello');
-
-Route::get('/hello', function() {
-    return view('helloSketo',['hello' => 'sketo']);
-});
-
-Route::get('/pyli', [calculatingController::class, 'pyli']);
-
-// Route::get('/dokimi/{id}',  [calculatingController::class, 'index']);
-
-Route::get('/pyli/{ttr}', [calculatingController::class, 'pyliTtr']);
 
 Route::any('/insert', [calculatingController::class, 'insertValue'])->name('insert');
 Route::any('/delete-post/{post}', [calculatingController::class, 'postDelete'])->name('post.del');
@@ -57,8 +45,4 @@ Route::any('/delete-post/{post}', [calculatingController::class, 'postDelete'])-
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-
-Route::get('/home2', function() {return view('home2');})->name('home2');
-
-
-Route::any('/', [calculatingController::class, 'showIndex'])->name('index')->middleware(['auth','language']); //mpainei anagkastika teleytaio giati otan trexo gia paradigma to /settings to pernei oti to lang einai to settings kai trexei ayto anti gia to route settings. Opote paizei rolo i seira
+//mpainei anagkastika teleytaio giati otan trexo gia paradigma to /settings to pernei oti to lang einai to settings kai trexei ayto anti gia to route settings. Opote paizei rolo i seira

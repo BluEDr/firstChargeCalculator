@@ -9,7 +9,7 @@
 <div style="margin:5px; display: flex" class="divbd">
     <div class="custom-div-form">
 <div class="custom-div">
-    <form method="POST" action="" enctype="multipart/form-data"> 
+    <form method="POST" action="{{route('index')}}" enctype="multipart/form-data"> 
         @csrf
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="defaultCheck11">
@@ -67,7 +67,7 @@
                     <hr>
                     <select id="dayDropdown" name="day" class="form-control">
                         <?php
-                            $days = array_merge(range(1, 31), ['Days']);
+                            $days = array_merge(['Days'], range(1, 31));
                             foreach ($days as $day) {
                                 $selected = ($day === 'Days') ? 'selected' : '';
                                 echo "<option value='$day' $selected>$day</option>";
@@ -77,29 +77,39 @@
             
                     <select id="monthDropdown" name="month" class="form-control">
                         <?php
-                            $months = array_merge(
-                                ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                                ['Months']
+                            $months = array_merge(['Months'],
+                                ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                                
                             );
+                            $i=0;
                             foreach ($months as $month) {
                                 $selected = ($month === 'Months') ? 'selected' : '';
-                                echo "<option value='$month' $selected>$month</option>";
+                                $j = ($i === 0) ? 'Months' : $i;
+                                echo "<option value='$j' $selected>$month</option>";
+                                $i++;
                             }
                         ?>
                     </select>
             
                     <select id="yearDropdown" name="year" class="form-control">
-                        <option value="Years" selected>Years</option>
-                        @if (isset($yearsInDb))
-                            @if (count($yearsInDb) > 0)
-                                @foreach ($yearsInDb as $year)
-                                    <option value="{{$year}}">{{$year}}</option>
-                                @endforeach   
-                            @endif
-                        @endif
+                        <option value="Years">Years</option>
+
+                        <?php
+                            if (isset($yearsInDb)) {
+                                if (count($yearsInDb) > 0) {
+                                    $i = 0;
+                                    foreach ($yearsInDb as $year) {
+                                        $selected = ($i === count($yearsInDb)-1) ? 'selected' : '';
+                                        echo "<option value='$year' $selected>$year</option>";
+                                        $i++;
+                                    }
+                                }
+                            }
+
+                        ?>
                     </select>
             
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">{{__('messages.search')}}</button>
                 </form>
             </div>
         @if (count($pAmound)>0)
