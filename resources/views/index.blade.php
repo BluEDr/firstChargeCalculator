@@ -162,7 +162,7 @@
             @if(!empty($spentToday))
                 <tr><td>{{__('messages.today_spent')}}</td><td> {{$spentToday}}</td></tr>
             @endif
-            @if(!empty($summWhileNow) && (count($pAmound) > 0) && (!empty($perDay)))
+            @if(!empty($summWhileNow) && (count($pAmound) > 0) && ((!empty($perDay)) || (!empty($calledFromSearch))))
                 <tr><td>{{__('messages.status_now')}}</td><td style="background-color: black ; color: red; text-decoration-line: underline; font-weight:bold"> {{$summWhileNow}}</td></tr>
             @endif
             </table>

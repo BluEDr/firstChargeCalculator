@@ -38,5 +38,9 @@ return [
     <strong>e-mail: skordos88@gmail.com</strong><br>
     <strong>Τηλέφωνο: (+30)6973900714</strong>',
     'search' => 'Αναζήτηση',
-
+    'hello' => 'Γειά σου ',
+    'chooseLang' => 'Επέλεξε γλώσσα προτίμησης για τον ιστότοπο:',
+    'writeSallaryHere' => 'Γράψτε τον μισθό σας εδώ:',
+    'yourSallaryHere' => 'Ο μισθός σας εδώ:',
+    'submit' => 'Καταχώρηση',
   ];

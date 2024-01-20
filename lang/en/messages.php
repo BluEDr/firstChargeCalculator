@@ -40,4 +40,10 @@ return [
   <strong>Email: skordos88@gmail.com</strong><br>
   <strong>Phone: (+30)6973900714</strong>',
   'search' => 'Search',
+  'sallaryAmound' => 'Your sallary amound is:',
+  'hello' => 'Hello ',
+  'chooseLang' => 'Choose a language for website:',
+  'writeSallaryHere' => 'Write your sallary here:',
+  'yourSallaryHere' => 'Your sallary here:',
+  'submit' => 'Submit',
 ];
