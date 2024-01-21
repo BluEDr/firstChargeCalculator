@@ -116,20 +116,23 @@ class calculatingController extends Controller
         return $years;
     }
 
-    private function calulateSummaryWhileNow(float $monthsPriceSum,int $userid, $daysOfMonth = null) {
-        $today = Carbon::now();
+    private function calulateSummaryWhileNow(float $monthsPriceSum,int $userid, $daysOfMonth = null, $month = null, $year = null) {
+        $currMonth = $month ?? Carbon::now()->month;
+        $currYear = $year ?? Carbon::now()->year;
+
+        $today = ($daysOfMonth==null ? Carbon::now() : Carbon::create($currYear,$currMonth,$daysOfMonth));
         $dayOfMonth = $daysOfMonth ?? $today->day;
-        $summaryWhileNow = ($this->howMuchPerDay($monthsPriceSum,$userid)*$dayOfMonth)-$monthsPriceSum;
+        $summaryWhileNow = ($this->howMuchPerDay($monthsPriceSum,$userid,$dayOfMonth)*$dayOfMonth)-$monthsPriceSum;
         return number_format($summaryWhileNow,2); 
     }
 
-    private function howMuchPerDay(float $monthsPriceSum,int $userid) {
+    private function howMuchPerDay(float $monthsPriceSum,int $userid,$maxDaysInMonth = null) {
         $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
         if (!$sal)
             return null;
         $today = Carbon::now();
         $dayOfMonth = $today->day;
-        $maxDaysInMonth = $today->daysInMonth;
+        $maxDaysInMonth = $maxDaysInMonth ?? $today->daysInMonth;
         $moneyThatICanSpendDaily = number_format($sal->sallary/$maxDaysInMonth,2);
         return number_format($moneyThatICanSpendDaily,2); 
     }
@@ -262,17 +265,20 @@ class calculatingController extends Controller
                     $spentToday = $this->todaySum($pAmound,$todayDate);
                 } elseif ($req->get('month')!='Months' && $req->get('year') != 'Years' && $req->get('day')=='Days') {
                     $pMonthsSum = $this->monthsSum($pAmound,$month,$year);
-                    $monthsPriceSum = $this->monthsSum($pAmound);
+                    $today = Carbon::create($year,$month,1); 
+                    // $monthsPriceSum = $this->monthsSum($pAmound);
                     $maxDaysInMonth = $today->daysInMonth;
                     $today = Carbon::create($year,$month,$maxDaysInMonth); 
                     // $sumaryWhileNow = calulateSummaryWhileNow($monthsPriceSum);
-                    $summWhileNow = $this->calulateSummaryWhileNow($monthsPriceSum,$userId);
-                    dd($summWhileNow);
+                    $summWhileNow = $this->calulateSummaryWhileNow($pMonthsSum,$userId,$maxDaysInMonth,$month,$year);
+                    
+                    
                 } elseif ($req->get('month')!='Months' && $req->get('year') != 'Years') {
                     $pMonthsSum = $this->monthsSum($pAmound,$month,$year);
                 } 
                 //todo: $calledFromSearch na ftiakso ayto na stelno mia timi etsi oste na bgazei sto search to status now xoris na exo steilei to $perDay giati sto index kolaei stin  @if(!empty($summWhileNow) && (count($pAmound) > 0) && ((!empty($perDay)) || (!empty($calledFromSearch))))
-                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('spentToday'))->with(compact('pMonthsSum'))->with(compact('currency_options'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with('yearsInDb',$yearsInDb);
+                $calledFromSearch = true;
+                return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('spentToday'))->with(compact('pMonthsSum'))->with(compact('currency_options'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with('yearsInDb',$yearsInDb)->with(compact('calledFromSearch'));
             }
         } else {
             $search = $req->get('search');
