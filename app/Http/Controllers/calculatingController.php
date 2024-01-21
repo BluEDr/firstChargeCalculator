@@ -122,18 +122,26 @@ class calculatingController extends Controller
 
         $today = ($daysOfMonth==null ? Carbon::now() : Carbon::create($currYear,$currMonth,$daysOfMonth));
         $dayOfMonth = $daysOfMonth ?? $today->day;
+        // dd($this->howMuchPerDay($monthsPriceSum,$userid,$dayOfMonth));
+        // dd($dayOfMonth);
         $summaryWhileNow = ($this->howMuchPerDay($monthsPriceSum,$userid,$dayOfMonth)*$dayOfMonth)-$monthsPriceSum;
+        
         return number_format($summaryWhileNow,2); 
     }
 
-    private function howMuchPerDay(float $monthsPriceSum,int $userid,$maxDaysInMonth = null) {
+    private function howMuchPerDay(float $monthsPriceSum,int $userid, $daysOfMonth = null, $month = null, $year = null) {
+        $currMonth = $month ?? Carbon::now()->month;
+        $currYear = $year ?? Carbon::now()->year;
         $sal = sallary::where('user_id', $userid)->latest('created_at')->first();
         if (!$sal)
             return null;
-        $today = Carbon::now();
+        
+        $today = ($daysOfMonth==null ? Carbon::now() : Carbon::create($currYear,$currMonth,$daysOfMonth));
+        // $today = Carbon::now();
         $dayOfMonth = $today->day;
-        $maxDaysInMonth = $maxDaysInMonth ?? $today->daysInMonth;
+        $maxDaysInMonth = $today->daysInMonth;
         $moneyThatICanSpendDaily = number_format($sal->sallary/$maxDaysInMonth,2);
+        // dd($monthsPriceSum);
         return number_format($moneyThatICanSpendDaily,2); 
     }
 
@@ -276,7 +284,6 @@ class calculatingController extends Controller
                 } elseif ($req->get('month')!='Months' && $req->get('year') != 'Years') {
                     $pMonthsSum = $this->monthsSum($pAmound,$month,$year);
                 } 
-                //todo: $calledFromSearch na ftiakso ayto na stelno mia timi etsi oste na bgazei sto search to status now xoris na exo steilei to $perDay giati sto index kolaei stin  @if(!empty($summWhileNow) && (count($pAmound) > 0) && ((!empty($perDay)) || (!empty($calledFromSearch))))
                 $calledFromSearch = true;
                 return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('spentToday'))->with(compact('pMonthsSum'))->with(compact('currency_options'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with('yearsInDb',$yearsInDb)->with(compact('calledFromSearch'));
             }
