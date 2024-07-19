@@ -1,9 +1,9 @@
 @extends('layouts.app2',['activePage' => 'home'])
 @section('content')
 
-@if(session('errorCheck'))
+@if(isset($errorCheck))
     <div class="alert alert-danger">
-        {{ session('errorCheck') }} 
+        {{ $errorCheck }} 
     </div>
 @endif
 <div style="margin:5px; display: flex" class="divbd">

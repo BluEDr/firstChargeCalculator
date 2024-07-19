@@ -30,6 +30,9 @@ class calculatingController extends Controller
         $currency_options = currency::all();
         if ($request->method() == 'POST') {
             $number = $request->input('price');
+            if (strpos($number, ',') !== false) {            // Check if there is a comma in the input
+                $number = str_replace(',', '.', $number);    // Replace commas with dots
+            }
             if (is_numeric($number) && is_float($number + 0.0)) {
                 $payed_amound = new payed_amound();
                 $payed_amound->price = $number+0.0;
@@ -285,6 +288,8 @@ class calculatingController extends Controller
                     $pMonthsSum = $this->monthsSum($pAmound,$month,$year);
                 } 
                 $calledFromSearch = true;
+                $today = Carbon::now();
+                $todayDate = $today->toDateString();
                 return view('index')->with('pAmound',$pAmound)->with(compact('options'))->with(compact('spentToday'))->with(compact('pMonthsSum'))->with(compact('currency_options'))->with(compact('summWhileNow'))->with(compact('todayDate'))->with('yearsInDb',$yearsInDb)->with(compact('calledFromSearch'));
             }
         } else {

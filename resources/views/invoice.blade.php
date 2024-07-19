@@ -19,11 +19,11 @@
 
             <td>{{$invoice->reason}}</td>
             <td>{{$invoice->created_at->format('d-m-Y')}}</td>
-            <td>{{$invoice->created_at->format('h:i')}}</td>
+            <td>{{$invoice->created_at->format('H:i')}}</td>
         </tr>
     </table>
     <br>
-    <img src="{{ asset('storage/uploaded_photos/'.$invoice->image) }}" alt="Invoice Image">
+    <img src="{{ asset('storage/uploaded_photos/'.$invoice->image) }}" alt="Invoice Image" width="100%">
     <br>
     <a href="{{route('index')}}">Return to home.</a>
 

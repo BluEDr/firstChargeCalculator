@@ -17,7 +17,7 @@ return new class extends Migration
 
             //den exo kanei akoma migrate to sugkekrimeno
             $table->id();
-            $table->float('price',8,2); //edo den ksero an prepei na balo real, Double, or something else
+            $table->float('price',8,2); //edo den ksero an prepei na balo real, Double, or something else, na to do
             $table->string('reason');
             $table->integer('category_id'); //foreign key to category tabe
             $table->unsignedBigInteger('user_id');     //foreign key to user table 
