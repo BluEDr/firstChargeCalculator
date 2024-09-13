@@ -23,6 +23,10 @@ Expense Manager is a web application designed to help users manage their persona
 + Database: MySQL
 + Languages: English, Greek
 
+### License
+
+This project is open-source and available under the MIT License.
+
 ### Contact
 
 For questions or feedback, feel free to reach out via:
