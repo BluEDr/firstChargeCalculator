@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # firstChargeCalculator
-=======
+
 # Expense Manager
 
 ### Description
@@ -36,4 +35,3 @@ Frontend: JavaScript, Blade templates, Bootstrap
 Database: MySQL
 
 Languages: English, Greek
->>>>>>> master
