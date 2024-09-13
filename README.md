@@ -27,5 +27,6 @@ Expense Manager is a web application designed to help users manage their persona
 
 For questions or feedback, feel free to reach out via:
 
-GitHub: BluEDr
-Email: skordos88@gmail.com
++ GitHub:   BluEDr
++ Email:    skordos88@gmail.com
++ LinkedIn: https://www.linkedin.com/in/tryfon-skordos-01a62a12a/
