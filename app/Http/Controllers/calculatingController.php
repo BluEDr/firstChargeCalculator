@@ -202,7 +202,7 @@ class calculatingController extends Controller
     }
 
     public function deleteRow($deletedId) {
-        $rowToDelete = payed_amound::where('id',$deletedId)->first();
+        $rowToDelete = payed_amound::where('id',$deletedId)->first();  //TODO: find and delete the invoice image if exists
         if ($rowToDelete){
             $rowToDelete->delete();
             return redirect()->back()->with('success', 'Row deleted successfully');
