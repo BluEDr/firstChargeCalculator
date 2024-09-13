@@ -2,7 +2,7 @@
 
 ### Description
 
-    Expense Manager is a web application designed to help users manage their personal finances by tracking income and expenses. Built with PHP, Laravel, JavaScript, and MySQL, this multi-language app (English and Greek) allows users to input their salary and monitor their spending habits over time. The app provides key financial insights, helping users stay on track with their budget.
+Expense Manager is a web application designed to help users manage their personal finances by tracking income and expenses. Built with PHP, Laravel, JavaScript, and MySQL, this multi-language app (English and Greek) allows users to input their salary and monitor their spending habits over time. The app provides key financial insights, helping users stay on track with their budget.
 
 ### Features
 
