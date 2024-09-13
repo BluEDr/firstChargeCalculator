@@ -22,3 +22,10 @@ Expense Manager is a web application designed to help users manage their persona
 + Frontend: JavaScript, Blade templates, Bootstrap
 + Database: MySQL
 + Languages: English, Greek
+
+### Contact
+
+For questions or feedback, feel free to reach out via:
+
+GitHub: BluEDr
+Email: skordos88@gmail.com
