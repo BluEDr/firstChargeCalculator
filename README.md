@@ -1,5 +1,3 @@
-# firstChargeCalculator
-
 # Expense Manager
 
 ### Description
