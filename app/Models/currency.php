@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class currency extends Model
 {
     use HasFactory;
+    // protected $fillable = [
+    //     'name'
+    // ];
 }

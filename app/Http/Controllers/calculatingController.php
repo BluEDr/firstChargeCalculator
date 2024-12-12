@@ -48,7 +48,7 @@ class calculatingController extends Controller
                 if(count($currency_options)>0) 
                     $payed_amound->currency_id = $request->get('dropdown_currency');
                 else
-                    $payed_amound->currency_id = -1;    //ok lets do
+                    $payed_amound->currency_id = 0;    //ok lets do
 
                 if ($request->has('defaultCheck11')) {
                     $payed_amound->is_negative = 1;
