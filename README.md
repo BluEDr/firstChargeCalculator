@@ -27,6 +27,14 @@ Expense Manager is a web application designed to help users manage their persona
 
 This project is open-source and available under the MIT License.
 
+### Setup 
+
+Run the migration and seed the database for the first time: It’s recommended to run the migration with the --seed option to populate the database with initial data.
+
+```bash
+php artisan migrate --seed
+```
+
 ### Contact
 
 For questions or feedback, feel free to reach out via:
